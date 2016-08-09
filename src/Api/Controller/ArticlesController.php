@@ -39,7 +39,7 @@ class ArticlesController extends Controller
         $catId = $request->get('catId');
         $content = $request->get('content');
 
-        if (($title != null)) {
+        if (($title != null) or ($catId != null) OR ($content != null)) {
             $this->getArticleModel()->newArticle($title, $catId, $content);
             return $this->redirect('http://mvc.pl/articles');
         }
@@ -65,7 +65,7 @@ class ArticlesController extends Controller
         $catId = $request->get('catId');
         $content = $request->get('content');
 
-        if ($title != '' AND $content != '') {
+        if (($title != null) or ($catId != null) OR ($content != null)) {
             $this->getArticleModel()->updateArticle($id, $title, $catId, $content);
             return $this->redirect('http://mvc.pl/articles');
         }

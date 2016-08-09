@@ -9,24 +9,18 @@
         {% endif %}
         <div class="form-group">
             <label for="name">Tytuł</label>
-            <input type="text" class="form-control" id="url" name="title" value="{% if(article.title) %}
-                    {{ article.title }}
-                {% endif %}">
+            <input type="text" class="form-control" id="url" name="title"
+                   value="{% if(article.title) %}{{ article.title }}{% endif %}">
         </div>
         <div class="form-group">
             <label for="pwd">Kategoria:</label>
-            <input type="text" class="form-control" id="catId" name="catId" value="
-                {% if(article.cat_id) %}
-                    {{ article.cat_id }}
-                {% endif %}">
+            <input type="text" class="form-control" id="catId" name="catId"
+                   value="{% if(article.cat_id) %}{{ article.cat_id }}{% endif %}">
         </div>
         <div class="form-group">
             <label for="content">Opis:</label>
-            <textarea class="form-control" name="content">
-                {% if(article.content) %}
-                    {{ article.content }}
-                {% endif %}
-            </textarea>
+            <textarea class="form-control"
+                      name="content">{% if(article.content) %}{{ article.content }}{% endif %}</textarea>
         </div>
         <button type="submit" class="btn btn-default" name="submit">Submit</button>
     </form>

@@ -11,10 +11,8 @@
         {% endif %}
         <div class="form-group">
             <label for="name">Tytuł</label>
-            <input type="text" class="form-control" id="name" name="name" value="
-                {% if(category.name) %}
-                    {{ category.name }}
-                {% endif %}">
+            <input type="text" class="form-control" id="name" name="name"
+                   value="{% if(category.name) %}{{ category.name }}{% endif %}">
         </div>
         <button type="submit" class="btn btn-default" name="submit">Submit</button>
     </form>
