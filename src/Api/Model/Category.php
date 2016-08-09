@@ -38,8 +38,7 @@ class Category extends Model
 
     public function updateCategory($id, $name)
     {
-        $sth = $this->pdo->prepare('UPDATE `category` SET `name`= :name
-                                               WHERE id = :id');
+        $sth = $this->pdo->prepare('UPDATE `category` SET `name`= :name WHERE id = :id');
         $sth->bindParam(':id', $id);
         $sth->bindParam(':name', $name);
         $sth->execute();
