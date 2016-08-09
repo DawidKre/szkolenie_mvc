@@ -31,8 +31,7 @@ class Category extends Model
 
     public function newCategory($name)
     {
-        $sth = $this->pdo->prepare('INSERT INTO category(`name`) 
-                               VALUES (:name)');
+        $sth = $this->pdo->prepare('INSERT INTO category(`name`) VALUES (:name)');
         $sth->bindParam(':name', $name);
         $sth->execute();
     }
