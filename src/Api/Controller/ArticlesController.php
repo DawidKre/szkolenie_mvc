@@ -15,21 +15,21 @@ class ArticlesController extends Controller
     public function indexAction(Request $request)
     {
         $pageParameter = $request->get('page');
-        $page = isSet($pageParameter) ? intval($pageParameter - 1) : 0;
+        $currentPage = isSet($pageParameter) ? intval($pageParameter - 1) : 0;
 
-        $from = $page * $this->limit;
+        $from = $currentPage * $this->limit;
         $count = $this->getArticleModel()->getTotalRecords();
-        $total = ceil($count / $this->limit);
+        $totalPages = ceil($count / $this->limit);
 
-        if ($page > $total) {
+        if ($currentPage > $totalPages) {
             return $this->redirect('http://mvc.pl/articles');
         }
 
         $articles = $this->getArticleModel()->getPaginationList($from, $this->limit);
         return $this->render('Api/view/article/index.html.twig', array(
             'articles' => $articles,
-            'page' => $page,
-            'total' => $total
+            'currentPage' => $currentPage,
+            'totalPages' => $totalPages
         ));
     }
 

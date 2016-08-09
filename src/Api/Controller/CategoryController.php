@@ -16,18 +16,18 @@ class CategoryController extends Controller
         $pageParameter = $request->get('page');
         $count = $this->getCategoryModel()->getTotalRecords();
 
-        $page = isSet($pageParameter) ? intval($pageParameter - 1) : 0;
-        $from = $page * $this->limit;
-        $total = ceil($count / $this->limit);
+        $currentPage = isSet($pageParameter) ? intval($pageParameter - 1) : 0;
+        $from = $currentPage * $this->limit;
+        $totalPages = ceil($count / $this->limit);
 
-        if ($page > $total) {
+        if ($currentPage > $totalPages) {
             return $this->redirect('http://mvc.pl/categories');
         }
         $categories = $this->getCategoryModel()->getPaginationList($from, $this->limit);
         return $this->render('Api/view/category/index.html.twig', array(
             'categories' => $categories,
-            'page' => $page,
-            'total' => $total
+            'currentPage' => $currentPage,
+            'totalPages' => $totalPages
         ));
     }
 
