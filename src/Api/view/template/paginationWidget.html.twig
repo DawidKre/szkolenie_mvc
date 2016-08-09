@@ -1,0 +1,12 @@
+<ul class="pagination">
+    {% if total != 0 %}
+        {% for i in 1..total %}
+            <li
+                    {% if page == i %}
+                        class="active"
+                    {% endif %}
+            >
+                <a href="{{ url(route, {'page' : i}) }}">{{ i }}</a></li>
+        {% endfor %}
+    {% endif %}
+</ul>

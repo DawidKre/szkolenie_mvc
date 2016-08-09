@@ -1,0 +1,44 @@
+{% extends 'Api/view/layout.html.twig' %}
+
+{% block body %}
+    <h1>Lista artykułów</h1>
+    <div><a class="btn btn-success" href="{{ url('new_article') }}">Nowy artykuł</a></div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Tytuł</th>
+            <th>Opis</th>
+            <th>Kategoria</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+            <tr>
+                <td><a href="{{ url('show_article', {'id' : article.id}) }}">{{ article.id }}</a></td>
+                <td>{{ article.title }}</td>
+                <td>{{ article.content | truncate(50, '...') }}</td>
+                <td>{{ article.cat_id }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a class="btn btn-success btn-sm" href="{{ url('show_article', {'id' : article.id}) }}">Pokaż</a>
+                        </li>
+                        <li>
+                            <a class="btn btn-danger btn-sm" href="{{ url('delete_article', {'id' : article.id}) }}">Usuń</a>
+
+                        </li>
+                        <li>
+                            <a class="btn btn-info btn-sm"
+                               href="{{ url('edit_article', {'id' : article.id}) }}">Edytuj</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        {{ print_pagination(total, 'articles', page) }}
+        </tbody>
+    </table>
+
+{% endblock %}

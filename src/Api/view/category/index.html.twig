@@ -1,0 +1,38 @@
+{% extends 'Api/view/layout.html.twig' %}
+
+{% block body %}
+    <h1>Lista kategorii</h1>
+    <div><a class="btn btn-success" href="{{ url('new_category') }}">Nowy artykuł</a></div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Kategoria</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td><a href="{{ url('show_category', {'id' : category.id}) }}">{{ category.id }}</a></td>
+                <td>{{ category.name }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a class="btn btn-success btn-sm" href="{{ url('show_category', {'id' : category.id}) }}">Pokaż</a>
+                        </li>
+                        <li>
+                            <a class="btn btn-danger btn-sm" href="{{ url('delete_category', {'id' : category.id}) }}">Usuń</a>
+
+                        </li>
+                        <li>
+                            <a class="btn btn-info btn-sm" href="{{ url('edit_category', {'id' : category.id}) }}">Edytuj</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        {{ print_pagination(total, 'categories', page) }}
+        </tbody>
+    </table>
+
+{% endblock %}

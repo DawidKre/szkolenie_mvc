@@ -1,0 +1,32 @@
+{% extends 'Api/view/layout.html.twig' %}
+
+{% block body %}
+    <h1>Image</h1>
+
+    <table>
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ article.id }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ article.title }}</td>
+        </tr>
+        <tr>
+            <th>Category</th>
+            <td>{{ article.content }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ url('articles') }}">Powrót do listy</a>
+        </li>
+        <li>
+            <a href="{{ url('delete_article', {'id' : article.id}) }}">Usuń</a>
+        </li>
+
+    </ul>
+{% endblock %}
