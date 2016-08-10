@@ -1,15 +1,3 @@
-{#<ul class="pagination">#}
-    {#{% if total != 0 %}#}
-        {#{% for i in 1..total %}#}
-            {#<li#}
-                    {#{% if page == i %}#}
-                        {#class="active"#}
-                    {#{% endif %}#}
-            {#>#}
-                {#<a href="{{ url(route, {'page' : i}) }}">{{ i }}</a></li>#}
-        {#{% endfor %}#}
-    {#{% endif %}#}
-{#</ul>#}
 <nav aria-label="Page navigation">
     <ul class="pagination ">
         {% if page != 1 %}
@@ -17,26 +5,33 @@
                 <a href="{{ url(route, {'page' : 1}) }}"><span aria-hidden="true">&larr;</span>Pierwsza</a>
             </li>
             <li>
-                <a href="#" aria-label="Previous">
+                <a href="{{ url(route, {'page' : page-1}) }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% else %}
+            <li class="previous disabled">
+                <a href="{{ url(route, {'page' : 1}) }}"><span aria-hidden="true">&larr;</span>Pierwsza</a>
+            </li>
+            <li class="previous disabled">
+                <a href="" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
         {% endif %}
 
-        {% if total != 0 %}
-            {% for i in 1..total %}
-                <li
-                        {% if page == i %}
-                            class="active"
-                        {% endif %}
-                >
-                    <a href="{{ url(route, {'page' : i}) }}">{{ i }}</a></li>
-            {% endfor %}
-        {% endif %}
-
+        {% set i = 1 %}
+        {% for i in i..total %}
+            {% if ((i >= (page -3)) and (i <= (page+3))) %}
+                <li {% if page == i %}class="active"{% endif %}>
+                    <a href="{{ url(route, {'page' : i}) }}">{{ i }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        
         {% if page != total %}
             <li>
-                <a href="#" aria-label="Next">
+                <a href="{{ url(route, {'page' : page+1}) }}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

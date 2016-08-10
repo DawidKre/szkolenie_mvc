@@ -31,17 +31,33 @@ class Articles extends Model
         $this->pdo->query("DELETE FROM article WHERE id = $id");
     }
 
-    public function newArticle($title, $catId, $content)
+    public function newArticle($title, $catId, $content, $image)
     {
-        $sth = $this->pdo->prepare('INSERT INTO article(`title`, `cat_id`, `content`) 
-                               VALUES (:title, :cat_id, :content)');
+        $sth = $this->pdo->prepare('INSERT INTO article(`title`, `cat_id`, `content`, `image`) 
+                               VALUES (:title, :cat_id, :content, :image)');
         $sth->bindParam(':title', $title);
         $sth->bindParam(':cat_id', $catId);
         $sth->bindParam(':content', $content);
+        $sth->bindParam(':image', $image);
         $sth->execute();
     }
 
-    public function updateArticle($id, $title, $catId, $content)
+    public function updateArticle($id, $title, $catId, $content, $image = null)
+    {
+        $sth = $this->pdo->prepare('UPDATE `article` SET `title`= :title,
+                                                  `cat_id`= :cat_id,
+                                                  `content`= :content,
+                                                  `image`= :image
+                                               WHERE id = :id');
+        $sth->bindParam(':id', $id);
+        $sth->bindParam(':title', $title);
+        $sth->bindParam(':cat_id', $catId);
+        $sth->bindParam(':content', $content);
+        $sth->bindParam(':image', $image);
+        $sth->execute();
+    }
+
+    public function updateWithoutImageArticle($id, $title, $catId, $content)
     {
         $sth = $this->pdo->prepare('UPDATE `article` SET `title`= :title,
                                                   `cat_id`= :cat_id,

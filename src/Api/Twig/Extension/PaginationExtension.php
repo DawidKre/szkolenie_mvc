@@ -16,8 +16,8 @@ class PaginationExtension extends Twig_Extension implements Twig_Extension_InitR
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('print_pagination', array($this, 'printPagination'), array('is_safe' => array
-            ('html'))),
+            new \Twig_SimpleFunction('print_pagination', array($this, 'printPagination'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('t1', array($this, 't1'), array('is_safe' => array('html'))),
         );
     }
 

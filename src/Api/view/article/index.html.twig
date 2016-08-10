@@ -10,6 +10,7 @@
             <th>Tytuł</th>
             <th>Opis</th>
             <th>Kategoria</th>
+            <th>Obraz</th>
             <th>Akcje</th>
         </tr>
         </thead>
@@ -20,6 +21,11 @@
                 <td>{{ article.title }}</td>
                 <td>{{ article.content | truncate(50, '...') }}</td>
                 <td>{{ article.cat_id }}</td>
+                {% if article.image != null %}
+                    <td><img src="http://localhost/mvc2/src/Api/public/img/{{ article.image }}"></td>
+                {% else %}
+                    <td>Brak miniatury</td>
+                {% endif %}
                 <td>
                     <ul>
                         <li>

@@ -23,7 +23,9 @@ $routes->add('show_article', new Routing\Route('/article/{id}', array(
 $routes->add('delete_article', new Routing\Route('/articles/delete/{id}', array(
     '_controller' => 'Api\\Controller\\ArticlesController::deleteAction'
 )));
-
+$routes->add('new_image', new Routing\Route('/image', array(
+    '_controller' => 'Api\\Controller\\ArticlesController::imageAction'
+)));
 
 // Category Model
 
