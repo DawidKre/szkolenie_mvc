@@ -24,20 +24,27 @@ class Framework
 
     public function handle(Request $request)
     {
-        $this->matcher->getContext()->fromRequest($request);
 
         try {
-            $request->attributes->add($this->matcher->match($request->getPathInfo()));
+
+            $path = explode('.', $request->getPathInfo());
+
+            $format = $path[1] ?? 'html';
+
+            $path = $path[0];
+
+            $request->attributes->add($this->matcher->match($path));
 
             $controller = $this->controllerResolver->getController($request);
             $arguments = $this->argumentResolver->getArguments($request, $controller);
+
+            $controller[0]->setFormat($format);
 
             return call_user_func_array($controller, $arguments);
         } catch (ResourceNotFoundException $e) {
             return new Response('Not Found' . $e->getMessage(), 404);
         } catch (\Exception $e) {
-            return new Response('An error occurred' . $e->getMessage(), 500);
-
+            return new Response('An error occurred ' . $e->getMessage(), 500);
         }
     }
 }

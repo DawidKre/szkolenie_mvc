@@ -15,7 +15,8 @@ class Controller
     private $view;
     private $urlGenerator;
     private $pdo;
-
+    private $format;
+    
     public function __construct()
     {
         $this->loadConfig();
@@ -39,11 +40,14 @@ class Controller
 
     public function render($name, $data = [])
     {
-        $body = $this->view->render($name, $data);
+        if ($this->format == 'json') {
+            $body = json_encode($data);
+        } else {
+            $body = $this->view->render($name, $data);
+        }
 
         return new Response($body);
     }
-
     public function databaseConnection()
     {
         return $this->pdo;
@@ -57,5 +61,10 @@ class Controller
     public function redirect($route)
     {
         return header('Location: ' . $route);
+    }
+
+    public function setFormat($format)
+    {
+        $this->format = $format;
     }
 }

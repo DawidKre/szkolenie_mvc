@@ -73,5 +73,14 @@ class CategoryController extends Controller
         return $this->redirect('http://mvc.pl/categories');
     }
 
+    /**
+     * @return Category
+     */
+    private function getCategoryModel()
+    {
+        $Category = new Category($this->databaseConnection());
+        return $Category;
+    }
+
 
 }

@@ -11,13 +11,14 @@ namespace Api\Model;
 namespace Api\Model;
 
 use Core\Model;
+use PDO;
 
 class Articles extends Model
 {
     public function getList()
     {
         $stmt = $this->pdo->query('SELECT * FROM article');
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_CLASS);
     }
 
     public function getArticle($id)

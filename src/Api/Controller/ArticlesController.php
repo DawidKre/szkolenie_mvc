@@ -5,13 +5,8 @@ namespace Api\Controller;
 use Api\Model\Articles;
 use Api\Upload\FileUploader;
 use Core\Controller;
-use Imagine\Gd\Imagine;
-use Imagine\Image\Box;
-use Imagine\Image\ImageInterface;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\FileBag;
+
 
 class ArticlesController extends Controller
 {
@@ -66,11 +61,17 @@ class ArticlesController extends Controller
         $targetDir = __DIR__ . '/../public/img';
         $uploader = new FileUploader($targetDir);
 
-        if (($title != null) or ($catId != null) OR ($content != null) OR ($image != null)) {
+        /*        if (($title != null) or ($catId != null) OR ($content != null) OR ($image != null)) {
+                    if ($image != null) {
+                        $fileName = $uploader->upload($image);
+                    }
+                    $this->getArticleModel()->newArticle($title, $catId, $content, $fileName);
+                    return $this->redirect('http://mvc.pl/articles');
+                }*/
+        if ($request->isMethod('POST')) {
             if ($image != null) {
                 $fileName = $uploader->upload($image);
             }
-
             $this->getArticleModel()->newArticle($title, $catId, $content, $fileName);
             return $this->redirect('http://mvc.pl/articles');
         }
@@ -105,8 +106,10 @@ class ArticlesController extends Controller
             if ($image != null) {
                 $fileName = $uploader->upload($image);
                 $this->getArticleModel()->updateArticle($id, $title, $catId, $content, $fileName);
-                unlink(__DIR__ . '/../public/img/' . $oldFileName);
-                unlink(__DIR__ . '/../public/img/' . str_replace('cover_', '', $oldFileName));
+                if ($oldFileName) {
+                    unlink(__DIR__ . '/../public/img/' . $oldFileName);
+                    unlink(__DIR__ . '/../public/img/' . str_replace('cover_', '', $oldFileName));
+                }
             } else {
                 $this->getArticleModel()->updateWithoutImageArticle($id, $title, $catId, $content);
             }
@@ -132,6 +135,19 @@ class ArticlesController extends Controller
     {
         $Articles = new Articles($this->databaseConnection());
         return $Articles;
+    }
+
+    public function formEditAction($id)
+    {
+        $article = $this->getArticleModel()->getArticle($id);
+        return $this->render('Api/view/article/new.html.twig', array(
+            'article' => $article
+        ));
+    }
+
+    public function formNewAction()
+    {
+        return $this->render('Api/view/article/new.html.twig');
     }
 
 
