@@ -13,15 +13,15 @@ namespace Api\Model;
 use Core\Model;
 use PDO;
 
-class Articles extends Model
+class Photos extends Model
 {
     public function getList()
     {
         $stmt = $this->pdo->query('
-          SELECT a.*, c.*  
-          FROM mydb.articles a 
-          LEFT JOIN mydb.categories c 
-          ON c.cat_id = a.art_cat_id');
+            SELECT p.*, g.*  
+            FROM mydb.photos p
+            LEFT JOIN mydb.galleries g
+            ON p.pht_gal_id = g.gal_id');
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

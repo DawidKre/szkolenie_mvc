@@ -41,7 +41,7 @@ class Controller
     public function render($name, $data = [])
     {
         if ($this->format == 'json') {
-            $body = json_encode($data);
+            $body = json_encode($data, JSON_UNESCAPED_UNICODE);
         } else {
             $body = $this->view->render($name, $data);
         }

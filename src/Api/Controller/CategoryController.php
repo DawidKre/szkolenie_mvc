@@ -6,7 +6,6 @@ use Api\Model\Category;
 use Core\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-
 class CategoryController extends Controller
 {
     public $limit = 3;
@@ -35,7 +34,7 @@ class CategoryController extends Controller
     {
         $name = $request->get('name');
 
-        if ($name != null) {
+        if ($request->isMethod('POST')) {
             $this->getCategoryModel()->newCategory($name);
             return $this->redirect('http://mvc.pl/categories');
         }
@@ -57,7 +56,7 @@ class CategoryController extends Controller
     {
         $category = $this->getCategoryModel()->getCategory($id);
         $name = $request->get('name');
-        if ($name != null) {
+        if ($request->isMethod('POST')) {
             $this->getCategoryModel()->updateCategory($id, $name);
             return $this->redirect('http://mvc.pl/categories');
         }

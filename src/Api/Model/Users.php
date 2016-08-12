@@ -13,16 +13,16 @@ namespace Api\Model;
 use Core\Model;
 use PDO;
 
-class Articles extends Model
+class Users extends Model
 {
     public function getList()
     {
-        $stmt = $this->pdo->query('
-          SELECT a.*, c.*  
-          FROM mydb.articles a 
-          LEFT JOIN mydb.categories c 
-          ON c.cat_id = a.art_cat_id');
-
+        $stmt = $this->pdo->query
+        ('
+          SELECT u.*  
+          FROM mydb.users u
+        ');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 }

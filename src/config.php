@@ -5,7 +5,7 @@ return [
         'driver' => 'pdo_mysql',
         'user' => 'root',
         'password' => 'bazadanych',
-        'dbname' => 'mvc_blog',
+        'dbname' => 'mydb',
     ],
 
     'twig' => [

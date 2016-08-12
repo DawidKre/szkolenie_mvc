@@ -8,44 +8,31 @@ $routes = new Routing\RouteCollection();
 $router = new Router(new Routing\RouteCollection());
 
 
-// Articles Model 
+// Article Model 
 
-//$router->addPost('new_article', '/article/new', array(
-//    '_controller' => 'Api\\Controller\\ArticlesController::newAction'
-//));
 $router->addMethods('new_article', '/article/new', array(
-    '_controller' => 'Api\\Controller\\ArticlesController::newAction'
-), [], array(
-    'post',
-    'get'
+    '_controller' => 'Api\\Controller\\ArticleController::newAction'
+), array(), array(
+    'POST',
+    'GET'
 ));
 $router->addMethods('edit_article', '/article/edit/{id}', array(
-    '_controller' => 'Api\\Controller\\ArticlesController::editAction'
+    '_controller' => 'Api\\Controller\\ArticleController::editAction'
 ), [], array(
-    'post',
-    'get'
+    'POST',
+    'GET'
 ));
-
-//$router->addGet('new_form_article', '/article/newForm', array(
-//    '_controller' => 'Api\\Controller\\ArticlesController::newAction'
-//));
-//$router->addGet('edit_form_article', '/article/editForm/{id}', array(
-//    '_controller' => 'Api\\Controller\\ArticlesController::editAction'
-//));
-
-$router->addGet('articles', '/articles/{page}', array(
+$router->addGet('articles', '/articless/{page}', array(
     'page' => 1,
-    '_controller' => 'Api\\Controller\\ArticlesController::indexAction'
-), array(
-    'id' => '\d+'
+    '_controller' => 'Api\\Controller\\ArticleController::indexAction'
 ));
 $router->addGet('show_article', '/article/{id}', array(
-    '_controller' => 'Api\\Controller\\ArticlesController::showAction'
+    '_controller' => 'Api\\Controller\\ArticleController::showAction'
 ), array(
     'id' => '\d+'
 ));
 $router->addGet('delete_article', '/article/delete/{id}', array(
-    '_controller' => 'Api\\Controller\\ArticlesController::deleteAction'
+    '_controller' => 'Api\\Controller\\ArticleController::deleteAction'
 ));
 
 /*
@@ -76,15 +63,21 @@ $routes->add('new_image', new Routing\Route('/image', array(
 )));*/
 
 // Category Model
-$router->addGet('new_category', '/category/new', array(
+
+$router->addMethods('new_category', '/category/new', array(
     '_controller' => 'Api\\Controller\\CategoryController::newAction'
+), [], array(
+    'POST',
+    'GET'
 ));
-$router->addGet('edit_category', '/category/edit/{id}', array(
+
+$router->addMethods('edit_category', '/category/edit/{id}', array(
     '_controller' => 'Api\\Controller\\CategoryController::editAction'
-), array(
-    'id' => '\d+'
+), [], array(
+    'POST',
+    'GET'
 ));
-$router->addGet('categories', '/categories/{page}', array(
+$router->addGet('categories', '/categoriess/{page}', array(
     'page' => 1,
     '_controller' => 'Api\\Controller\\CategoryController::indexAction'
 ), array(
@@ -100,28 +93,27 @@ $router->addGet('delete_category', '/category/delete/{id}', array(
 ));
 
 
+//REST API CONTROLLERS
 
-$routes->add('new_category', new Routing\Route('/category/new', array(
-    '_controller' => 'Api\\Controller\\CategoryController::newAction'
-)));
-
-$routes->add('edit_category', new Routing\Route('/category/edit/{id}', array(
-    '_controller' => 'Api\\Controller\\CategoryController::editAction'
-)));
-$routes->add('categories', new Routing\Route('/categories/{page}', array(
+$router->addGet('list_articles', '/articles/{page}', array(
     'page' => 1,
-    '_controller' => 'Api\\Controller\\CategoryController::indexAction'
-), array(
-    'id' => '\d+'
-)));
-$routes->add('show_category', new Routing\Route('/category/{id}', array(
-    '_controller' => 'Api\\Controller\\CategoryController::showAction'
-), array(
-    'id' => '\d+'
-)));
-$routes->add('delete_category', new Routing\Route('/category/delete/{id}', array(
-    '_controller' => 'Api\\Controller\\CategoryController::deleteAction'
-)));
+    '_controller' => 'Api\\Controller\\ArticlesController::listAction'
+));
 
+$router->addGet('list_categories', '/categories/{page}', array(
+    'page' => 1,
+    '_controller' => 'Api\\Controller\\CategoriesController::listAction'
+));
+$router->addGet('list_galleries', '/galleries/{page}', array(
+    'page' => 1,
+    '_controller' => 'Api\\Controller\\GalleriesController::listAction'
+));
+$router->addGet('list_photos', '/photos/{page}', array(
+    'page' => 1,
+    '_controller' => 'Api\\Controller\\PhotosController::listAction'
+));
+$router->addGet('list_users', '/users/{page}', array(
+    'page' => 1,
+    '_controller' => 'Api\\Controller\\UsersController::listAction'
+));
 return $router->getRouteCollection();
-//return $routes;
