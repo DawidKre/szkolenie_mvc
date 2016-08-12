@@ -2,7 +2,6 @@
 
 namespace Api\Controller;
 
-use Api\Model\Galleries;
 use Api\Model\Photos;
 use Core\Controller;
 
@@ -16,6 +15,13 @@ class PhotosController extends Controller
         ));
     }
 
+    public function showAction($id)
+    {
+        $article = $this->getPhotosModel()->getPhoto($id);
+        return $this->render('', array(
+            'photo' => $article
+        ));
+    }
     /**
      * @return Photos
      */

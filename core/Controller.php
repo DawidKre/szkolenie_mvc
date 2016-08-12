@@ -4,10 +4,13 @@ namespace Core;
 
 use Core\Providers\PDOServiceProvider;
 use Core\Providers\TwigServiceProvider;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 
 class Controller
 {
@@ -16,7 +19,8 @@ class Controller
     private $urlGenerator;
     private $pdo;
     private $format;
-    
+
+
     public function __construct()
     {
         $this->loadConfig();
@@ -38,15 +42,26 @@ class Controller
         $this->config = include(__DIR__ . '/../src/config.php');
     }
 
-    public function render($name, $data = [])
+//    public function render($name, $data = [], $statusCode = [])
+//    {
+//        if ($this->format == 'json') {
+//            $body = json_encode($data, JSON_UNESCAPED_UNICODE);
+//            
+//        } else {
+//            $body = $this->view->render($name, $data);
+//        }
+//
+//        return new Response($body, $statusCode);
+//    }
+    public function render($name, $data = [], $status = 200, $headers = [])
     {
         if ($this->format == 'json') {
-            $body = json_encode($data, JSON_UNESCAPED_UNICODE);
+            return new JsonResponse($data, $status, $headers);
         } else {
             $body = $this->view->render($name, $data);
+            return new Response($body);
         }
 
-        return new Response($body);
     }
     public function databaseConnection()
     {
@@ -63,8 +78,19 @@ class Controller
         return header('Location: ' . $route);
     }
 
+    public function redirectToRoute($route, $parameters = array())
+    {
+        return new RedirectResponse($this->urlGenerator->generate($route, $parameters));
+    }
     public function setFormat($format)
     {
         $this->format = $format;
     }
+
+    public function generateUrl($route, $parameters = array())
+    {
+        return $this->urlGenerator->generate($route, $parameters);
+    }
+
+
 }

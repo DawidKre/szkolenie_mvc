@@ -15,6 +15,13 @@ class GalleriesController extends Controller
         ));
     }
 
+    public function showAction($id)
+    {
+        $article = $this->getGalleriesModel()->getGallery($id);
+        return $this->render('', array(
+            'gallery' => $article
+        ));
+    }
     /**
      * @return Galleries
      */

@@ -2,8 +2,6 @@
 
 namespace Api\Controller;
 
-use Api\Model\Galleries;
-use Api\Model\Photos;
 use Api\Model\Users;
 use Core\Controller;
 
@@ -17,6 +15,13 @@ class UsersController extends Controller
         ));
     }
 
+    public function showAction($id)
+    {
+        $article = $this->getUsersModel()->getUser($id);
+        return $this->render('', array(
+            'user' => $article
+        ));
+    }
     /**
      * @return Users
      */

@@ -23,7 +23,7 @@ class ArticleController extends Controller
         $totalPages = ceil($count / $this->limit);
 
         if ($currentPage > $totalPages) {
-            return $this->redirect('http://mvc.pl/articles');
+            return $this->redirect('http://mvc.pl/blog/articles');
         }
 
         $articles = $this->getArticleModel()->getPaginationList($from, $this->limit);
@@ -44,19 +44,12 @@ class ArticleController extends Controller
         $targetDir = __DIR__ . '/../public/img';
         $uploader = new FileUploader($targetDir);
 
-        /*        if (($title != null) or ($catId != null) OR ($content != null) OR ($image != null)) {
-                    if ($image != null) {
-                        $fileName = $uploader->upload($image);
-                    }
-                    $this->getArticleModel()->newArticle($title, $catId, $content, $fileName);
-                    return $this->redirect('http://mvc.pl/articles');
-                }*/
         if ($request->isMethod('POST')) {
             if ($image != null) {
                 $fileName = $uploader->upload($image);
             }
             $this->getArticleModel()->newArticle($title, $catId, $content, $fileName);
-            return $this->redirect('http://mvc.pl/articles');
+            return $this->redirect('http://mvc.pl/blog/articles');
         }
 
         return $this->render('Api/view/article/new.html.twig', array(
@@ -97,7 +90,7 @@ class ArticleController extends Controller
                 $this->getArticleModel()->updateWithoutImageArticle($id, $title, $catId, $content);
             }
 
-            return $this->redirect('http://mvc.pl/articles');
+            return $this->redirect('http://mvc.pl/blog/articles');
         }
 
         return $this->render('Api/view/article/new.html.twig', array(
@@ -108,7 +101,7 @@ class ArticleController extends Controller
     public function deleteAction($id)
     {
         $this->getArticleModel()->deleteArticle($id);
-        return $this->redirect('http://mvc.pl/articles');
+        return $this->redirect('http://mvc.pl/blog/articles');
     }
 
     /**
