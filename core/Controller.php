@@ -65,11 +65,6 @@ class Controller
 
     }
 
-    public function databaseConnection()
-    {
-        return $this->pdo;
-    }
-
     public function pdo($class)
     {
         return new $class($this->pdo);
