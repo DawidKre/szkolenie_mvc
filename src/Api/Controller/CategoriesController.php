@@ -10,21 +10,22 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CategoriesController extends Controller
 {
-    public $limit = 3;
 
     public function listAction(Request $request)
     {
         $pageParameter = $request->get('page');
+        $limit = $request->get('limit');
+        if ($limit > 20) $limit = 20;
         $currentPage = isSet($pageParameter) ? intval($pageParameter - 1) : 0;
-        $from = $currentPage * $this->limit;
+        $from = $currentPage * $limit;
         $count = $this->getCategoriesModel()->getTotalRecords();
-        $totalPages = ceil($count / $this->limit);
-        $list = $this->getCategoriesModel()->getPaginationList($from, $this->limit);
+        $totalPages = ceil($count / $limit);
+        $list = $this->getCategoriesModel()->getPaginationList($from, $limit);
 
         //$list = $this->getCategoriesModel()->getList();
         return $this->render('', array(
             'categories' => $list,
-            'limit' => $this->limit,
+            'limit' => $limit,
             'count' => $count,
             'total_pages' => $totalPages
 

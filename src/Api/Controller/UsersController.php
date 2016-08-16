@@ -9,20 +9,22 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UsersController extends Controller
 {
-    public $limit = 4;
+
 
     public function listAction(Request $request)
     {
         $pageParameter = $request->get('page');
+        $limit = $request->get('limit');
+        if ($limit > 20) $limit = 20;
         $currentPage = isSet($pageParameter) ? intval($pageParameter - 1) : 0;
-        $from = $currentPage * $this->limit;
+        $from = $currentPage * $limit;
         $count = $this->getUsersModel()->getTotalRecords();
-        $totalPages = ceil($count / $this->limit);
-        $list = $this->getUsersModel()->getPaginationList($from, $this->limit);
+        $totalPages = ceil($count / $limit);
+        $list = $this->getUsersModel()->getPaginationList($from, $limit);
 
         return $this->render('', array(
             'users' => $list,
-            'limit' => $this->limit,
+            'limit' => intval($limit),
             'total_pages' => $totalPages,
             'count' => $count,
         ));
@@ -30,9 +32,11 @@ class UsersController extends Controller
 
     public function showAction($id)
     {
-        $article = $this->getUsersModel()->getUser($id);
+        $user = $this->getUsersModel()->getUser($id);
+        $articles = $this->getUsersModel()->getUserArticles($id);
         return $this->render('', array(
-            'user' => $article
+            'user' => $user,
+            'articles' => $articles
         ));
     }
 

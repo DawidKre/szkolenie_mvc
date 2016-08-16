@@ -82,4 +82,22 @@ class Users extends Model
         $count = $this->pdo->query("SELECT COUNT( usr_id ) as total FROM mydb.users")->fetch()['total'];
         return $count;
     }
+
+    public function deleteUser($id)
+    {
+        return $this->pdo->query("
+            DELETE FROM mydb.users 
+            WHERE usr_id = $id"
+        )->execute();
+    }
+
+    public function getUserArticles($id)
+    {
+        $stmt = $this->pdo->query("
+          SELECT a.*
+          FROM mydb.articles a 
+          WHERE art_usr_id = $id"
+        );
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

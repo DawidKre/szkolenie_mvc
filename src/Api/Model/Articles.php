@@ -168,4 +168,20 @@ class Articles extends Model
             WHERE cmt_id = $id"
         )->execute();
     }
+
+//    public function getTagsList($id)
+//    {
+//        $stmt = $this->pdo->query("
+//          SELECT t.*
+//          FROM mydb.tags_has_articles_has_tag t
+//           JOIN mydb.articles a ON a.art_id = t.articles_has_tag_tag_id
+//          WHERE t.tags_tag_id = $id"
+//        );
+//
+////        select c.*
+////  from post_category_bridge b
+////    join post_category c        on c.id = b.category_id
+////  where b.post_id = ?
+//        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+//    }
 }

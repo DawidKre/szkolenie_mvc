@@ -10,20 +10,21 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ArticlesController extends Controller
 {
-    public $limit = 3;
-
     public function listAction(Request $request)
     {
         $pageParameter = $request->get('page');
+        $limit = $request->get('limit');
+        if ($limit > 20) $limit = 20;
         $currentPage = isSet($pageParameter) ? intval($pageParameter - 1) : 0;
-        $from = $currentPage * $this->limit;
+        $from = $currentPage * $limit;
         $count = $this->getArticlesModel()->getTotalRecords();
-        $totalPages = ceil($count / $this->limit);
-        $list = $this->getArticlesModel()->getPaginationList($from, $this->limit);
+        $totalPages = ceil($count / $limit);
+
+        $list = $this->getArticlesModel()->getPaginationList($from, $limit);
 
         return $this->render('', array(
             'articles' => $list,
-            'limit' => $this->limit,
+            'limit' => $limit,
             'total_pages' => $totalPages,
             'count' => $count,
         ));
@@ -33,6 +34,7 @@ class ArticlesController extends Controller
     {
         $article = $this->getArticlesModel()->getArticle($id);
         $comments = $this->getArticlesModel()->getCommentsList($id);
+        $tags = $this->getArticlesModel()->getTagsList($id);
         return $this->render('', array(
             'article' => $article,
             'comments' => $comments

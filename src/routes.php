@@ -91,27 +91,32 @@ $router->addGet('delete_category', '/blog/category/delete/{id}', array(
     '_controller' => 'Api\\Controller\\CategoryController::deleteAction'
 ));
 
-
 //REST API CONTROLLERS
 
 // REST API LISTS ACTIONS 
-$router->addGet('articles_list', '/articles/{page}', array(
+$router->addGet('articles_list', '/articles/{page}/{limit}', array(
     'page' => 1,
+    'limit' => 5,
     '_controller' => 'Api\\Controller\\ArticlesController::listAction'
 ), array(
-    'id' => '\d+'
+    'id' => '\d+',
+    'limit' => '\d+'
 ));
-$router->addGet('categories_list', '/categories/{page}', array(
+$router->addGet('categories_list', '/categories/{page}/{limit}', array(
     'page' => 1,
+    'limit' => 5,
     '_controller' => 'Api\\Controller\\CategoriesController::listAction'
 ), array(
-    'id' => '\d+'
+    'id' => '\d+',
+    'limit' => '\d+'
 ));
-$router->addGet('galleries_list', '/galleries/{page}', array(
+$router->addGet('galleries_list', '/galleries/{page}/{limit}', array(
     'page' => 1,
+    'limit' => 5,
     '_controller' => 'Api\\Controller\\GalleriesController::listAction'
 ), array(
-    'id' => '\d+'
+    'id' => '\d+',
+    'limit' => '\d+'
 ));
 $router->addGet('photos_list', '/photos', array(
     'page' => 1,
@@ -119,11 +124,13 @@ $router->addGet('photos_list', '/photos', array(
 ), array(
     'id' => '\d+'
 ));
-$router->addGet('users_list', '/users/{page}', array(
+$router->addGet('users_list', '/users/{page}/{limit}', array(
     'page' => 1,
+    'limit' => 5,
     '_controller' => 'Api\\Controller\\UsersController::listAction'
 ), array(
-    'id' => '\d+'
+    'id' => '\d+',
+    'limit' => '\d+'
 ));
 
 

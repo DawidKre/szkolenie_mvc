@@ -9,19 +9,21 @@ use Symfony\Component\HttpFoundation\Response;
 
 class GalleriesController extends Controller
 {
-    public $limit = 3;
+
 
     public function listAction(Request $request)
     {
         $pageParameter = $request->get('page');
+        $limit = $request->get('limit');
+        if ($limit > 20) $limit = 20;
         $currentPage = isSet($pageParameter) ? intval($pageParameter - 1) : 0;
-        $from = $currentPage * $this->limit;
+        $from = $currentPage * $limit;
         $count = $this->getGalleriesModel()->getTotalRecords();
-        $totalPages = ceil($count / $this->limit);
-        $list = $this->getGalleriesModel()->getPaginationList($from, $this->limit);
+        $totalPages = ceil($count / $limit);
+        $list = $this->getGalleriesModel()->getPaginationList($from, $$limit);
         return $this->render('', array(
             'galleries' => $list,
-            'limit' => $this->limit,
+            'limit' => $limit,
             'total_pages' => $totalPages,
             'count' => $count,
         ));
