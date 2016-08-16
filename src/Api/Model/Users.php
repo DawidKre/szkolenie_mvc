@@ -36,7 +36,7 @@ class Users extends Model
 
     public function getPaginationList($from, $limit)
     {
-        $sql = "SELECT *  FROM users u ORDER BY u.usr_id DESC LIMIT " . $from . ', ' . $limit;
+        $sql = "SELECT u.*  FROM users u ORDER BY u.usr_id DESC LIMIT " . $from . ', ' . $limit;
         $result = $this->pdo->query($sql);
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -75,5 +75,11 @@ class Users extends Model
         $sth->bindParam(':usrDate', $usrDate);
 
         return $sth->execute();
+    }
+
+    public function getTotalRecords()
+    {
+        $count = $this->pdo->query("SELECT COUNT( usr_id ) as total FROM mydb.users")->fetch()['total'];
+        return $count;
     }
 }

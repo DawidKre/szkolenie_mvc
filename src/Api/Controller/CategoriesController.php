@@ -17,19 +17,27 @@ class CategoriesController extends Controller
         $pageParameter = $request->get('page');
         $currentPage = isSet($pageParameter) ? intval($pageParameter - 1) : 0;
         $from = $currentPage * $this->limit;
-
+        $count = $this->getCategoriesModel()->getTotalRecords();
+        $totalPages = ceil($count / $this->limit);
         $list = $this->getCategoriesModel()->getPaginationList($from, $this->limit);
+
         //$list = $this->getCategoriesModel()->getList();
         return $this->render('', array(
-            'categories' => $list
+            'categories' => $list,
+            'limit' => $this->limit,
+            'count' => $count,
+            'total_pages' => $totalPages
+
         ));
     }
 
     public function showAction($id)
     {
         $article = $this->getCategoriesModel()->getCategory($id);
+        $articles = $this->getCategoriesModel()->getArticlesList($id);
         return $this->render('', array(
-            'category' => $article
+            'category' => $article,
+            'articles' => $articles
         ));
     }
 

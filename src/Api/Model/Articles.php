@@ -149,7 +149,14 @@ class Articles extends Model
 
     public function getPaginationList($from, $limit)
     {
-        $sql = "SELECT *  FROM articles a ORDER BY a.art_id DESC LIMIT " . $from . ', ' . $limit;
+        $sql = "SELECT a.*, c.*, g.*  
+          FROM mydb.articles a 
+          LEFT JOIN mydb.categories c 
+          ON c.cat_id = a.art_cat_id
+          LEFT JOIN mydb.galleries g 
+          ON g.gal_id = a.galleries_gal_id 
+          ORDER BY a.art_id DESC LIMIT " . $from . ', ' . $limit;
+
         $result = $this->pdo->query($sql);
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }

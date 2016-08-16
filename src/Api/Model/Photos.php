@@ -38,4 +38,10 @@ class Photos extends Model
         );
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getTotalRecords()
+    {
+        $count = $this->pdo->query("SELECT COUNT( pht_id ) as total FROM mydb.photos")->fetch()['total'];
+        return $count;
+    }
 }

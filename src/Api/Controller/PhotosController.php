@@ -22,6 +22,7 @@ class PhotosController extends Controller
             'photo' => $article
         ));
     }
+
     /**
      * @return Photos
      */

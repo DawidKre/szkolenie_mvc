@@ -16,10 +16,15 @@ class UsersController extends Controller
         $pageParameter = $request->get('page');
         $currentPage = isSet($pageParameter) ? intval($pageParameter - 1) : 0;
         $from = $currentPage * $this->limit;
+        $count = $this->getUsersModel()->getTotalRecords();
+        $totalPages = ceil($count / $this->limit);
         $list = $this->getUsersModel()->getPaginationList($from, $this->limit);
 
         return $this->render('', array(
-            'users' => $list
+            'users' => $list,
+            'limit' => $this->limit,
+            'total_pages' => $totalPages,
+            'count' => $count,
         ));
     }
 
@@ -90,6 +95,7 @@ class UsersController extends Controller
             'status' => Response::HTTP_NOT_FOUND
         ));
     }
+
     /**
      * @return Users
      */

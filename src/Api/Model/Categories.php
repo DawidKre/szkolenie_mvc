@@ -80,4 +80,20 @@ class Categories extends Model
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getArticlesList($id)
+    {
+        $stmt = $this->pdo->query("
+          SELECT a.*
+          FROM mydb.articles a 
+          WHERE art_cat_id = $id"
+        );
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getTotalRecords()
+    {
+        $count = $this->pdo->query("SELECT COUNT( cat_id ) as total FROM mydb.categories")->fetch()['total'];
+        return $count;
+    }
+
 }

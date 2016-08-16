@@ -119,7 +119,7 @@ $router->addGet('photos_list', '/photos', array(
 ), array(
     'id' => '\d+'
 ));
-$router->addGet('users_list', '/users', array(
+$router->addGet('users_list', '/users/{page}', array(
     'page' => 1,
     '_controller' => 'Api\\Controller\\UsersController::listAction'
 ), array(

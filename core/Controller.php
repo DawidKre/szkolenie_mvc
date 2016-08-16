@@ -64,6 +64,7 @@ class Controller
         }
 
     }
+
     public function databaseConnection()
     {
         return $this->pdo;
@@ -83,6 +84,7 @@ class Controller
     {
         return new RedirectResponse($this->urlGenerator->generate($route, $parameters));
     }
+
     public function setFormat($format)
     {
         $this->format = $format;

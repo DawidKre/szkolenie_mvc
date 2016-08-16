@@ -17,11 +17,15 @@ class ArticlesController extends Controller
         $pageParameter = $request->get('page');
         $currentPage = isSet($pageParameter) ? intval($pageParameter - 1) : 0;
         $from = $currentPage * $this->limit;
-
+        $count = $this->getArticlesModel()->getTotalRecords();
+        $totalPages = ceil($count / $this->limit);
         $list = $this->getArticlesModel()->getPaginationList($from, $this->limit);
 
         return $this->render('', array(
-            'articles' => $list
+            'articles' => $list,
+            'limit' => $this->limit,
+            'total_pages' => $totalPages,
+            'count' => $count,
         ));
     }
 
@@ -164,7 +168,7 @@ class ArticlesController extends Controller
             'status' => Response::HTTP_NOT_FOUND
         ));
     }
-    
+
     /**
      * @return Articles
      */

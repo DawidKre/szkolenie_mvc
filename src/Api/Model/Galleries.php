@@ -28,6 +28,20 @@ class Galleries extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getPaginationList($from, $limit)
+    {
+        $stmt = $this->pdo->query("
+            SELECT g.*, a.*, p.*  
+            FROM mydb.galleries g 
+            LEFT JOIN mydb.articles a 
+            ON g.gal_id = a.galleries_gal_id
+            LEFT JOIN mydb.photos p 
+            ON g.gal_id = p.pht_gal_id
+            LIMIT $from, $limit"
+        );
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function getGallery($id)
     {
         $stmt = $this->pdo->query("
@@ -133,5 +147,10 @@ class Galleries extends Model
         )->execute();
     }
 
+    public function getTotalRecords()
+    {
+        $count = $this->pdo->query("SELECT COUNT( gal_id ) as total FROM mydb.galleries")->fetch()['total'];
+        return $count;
+    }
 
 }
