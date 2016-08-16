@@ -25,7 +25,7 @@ class CategoriesController extends Controller
         //$list = $this->getCategoriesModel()->getList();
         return $this->render('', array(
             'categories' => $list,
-            'limit' => $limit,
+            'limit' => intval($limit),
             'count' => $count,
             'total_pages' => $totalPages
 

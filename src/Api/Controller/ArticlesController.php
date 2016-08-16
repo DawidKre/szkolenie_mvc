@@ -24,7 +24,7 @@ class ArticlesController extends Controller
 
         return $this->render('', array(
             'articles' => $list,
-            'limit' => $limit,
+            'limit' => intval($limit),
             'total_pages' => $totalPages,
             'count' => $count,
         ));

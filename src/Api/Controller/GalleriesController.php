@@ -23,7 +23,7 @@ class GalleriesController extends Controller
         $list = $this->getGalleriesModel()->getPaginationList($from, $$limit);
         return $this->render('', array(
             'galleries' => $list,
-            'limit' => $limit,
+            'limit' => intval($limit),
             'total_pages' => $totalPages,
             'count' => $count,
         ));
