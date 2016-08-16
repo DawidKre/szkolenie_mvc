@@ -27,7 +27,7 @@ class PhotosController extends Controller
      */
     public function getPhotosModel()
     {
-        $Model = new Photos($this->databaseConnection());
+        $Model = $this->pdo(Photos::class);
         return $Model;
     }
 

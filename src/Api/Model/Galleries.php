@@ -42,4 +42,47 @@ class Galleries extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function createGallery($galName)
+    {
+        $sth = $this->pdo->prepare("
+        INSERT INTO mydb.galleries(gal_name) 
+        VALUES (:galName)"
+        );
+        $sth->bindParam(':galName', $galName);
+
+        return $sth->execute();
+    }
+
+    public function updateGallery($galId, $galName)
+    {
+        {
+            $sth = $this->pdo->prepare("
+            UPDATE mydb.galleries
+            SET gal_name= :galName
+            WHERE gal_id = :galId"
+            );
+            $sth->bindParam(':galId', $galId);
+            $sth->bindParam(':galName', $galName);
+            return $sth->execute();
+        }
+    }
+
+    public function deleteGallery($id)
+    {
+        return $this->pdo->query("
+            DELETE FROM mydb.galleries 
+            WHERE gal_id = $id"
+        )->execute();
+    }
+
+    public function getPhotosList($id)
+    {
+        $stmt = $this->pdo->query("
+          SELECT p.*
+          FROM mydb.photos p 
+          WHERE pht_gal_id = $id"
+        );
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

@@ -42,17 +42,18 @@ class Controller
         $this->config = include(__DIR__ . '/../src/config.php');
     }
 
-//    public function render($name, $data = [], $statusCode = [])
-//    {
-//        if ($this->format == 'json') {
-//            $body = json_encode($data, JSON_UNESCAPED_UNICODE);
-//            
-//        } else {
-//            $body = $this->view->render($name, $data);
-//        }
-//
-//        return new Response($body, $statusCode);
-//    }
+    /*
+        public function render($name, $data = [], $statusCode = [])
+        {
+            if ($this->format == 'json') {
+                $body = json_encode($data, JSON_UNESCAPED_UNICODE);
+                
+            } else {
+                $body = $this->view->render($name, $data);
+            }
+    
+            return new Response($body, $statusCode);
+        }*/
     public function render($name, $data = [], $status = 200, $headers = [])
     {
         if ($this->format == 'json') {

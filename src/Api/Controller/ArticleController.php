@@ -109,7 +109,7 @@ class ArticleController extends Controller
      */
     private function getArticleModel()
     {
-        $Articles = new Article($this->databaseConnection());
+        $Articles = $this->pdo(Article::class);
         return $Articles;
     }
 }

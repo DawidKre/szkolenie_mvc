@@ -22,12 +22,13 @@ class UsersController extends Controller
             'user' => $article
         ));
     }
+
     /**
      * @return Users
      */
     public function getUsersModel()
     {
-        $Model = new Users($this->databaseConnection());
+        $Model = $this->pdo(Users::class);
         return $Model;
     }
 

@@ -95,44 +95,60 @@ $router->addGet('delete_category', '/blog/category/delete/{id}', array(
 //REST API CONTROLLERS
 
 // REST API LISTS ACTIONS 
-$router->addGet('articles_list', '/articles', array(
+$router->addGet('articles_list', '/articles/{page}', array(
+    'page' => 1,
     '_controller' => 'Api\\Controller\\ArticlesController::listAction'
+), array(
+    'id' => '\d+'
 ));
-$router->addGet('categories_list', '/categories', array(
+$router->addGet('categories_list', '/categories/{page}', array(
+    'page' => 1,
     '_controller' => 'Api\\Controller\\CategoriesController::listAction'
+), array(
+    'id' => '\d+'
 ));
-$router->addGet('galleries_list', '/galleries', array(
+$router->addGet('galleries_list', '/galleries/{page}', array(
+    'page' => 1,
     '_controller' => 'Api\\Controller\\GalleriesController::listAction'
+), array(
+    'id' => '\d+'
 ));
 $router->addGet('photos_list', '/photos', array(
+    'page' => 1,
     '_controller' => 'Api\\Controller\\PhotosController::listAction'
+), array(
+    'id' => '\d+'
 ));
 $router->addGet('users_list', '/users', array(
+    'page' => 1,
     '_controller' => 'Api\\Controller\\UsersController::listAction'
+), array(
+    'id' => '\d+'
 ));
 
+
 // REST API SHOW ACTIONS 
-$router->addGet('article_show', '/articles/{id}', array(
+$router->addGet('article_show', '/article/{id}', array(
     '_controller' => 'Api\\Controller\\ArticlesController::showAction'
 ), array(
     'id' => '\d+'
 ));
-$router->addGet('category_show', '/categories/{id}', array(
+$router->addGet('category_show', '/category/{id}', array(
     '_controller' => 'Api\\Controller\\CategoriesController::showAction'
 ), array(
     'id' => '\d+'
 ));
-$router->addGet('gallery_show', '/galleries/{id}', array(
+$router->addGet('gallery_show', '/gallery/{id}', array(
     '_controller' => 'Api\\Controller\\GalleriesController::showAction'
 ), array(
     'id' => '\d+'
 ));
-$router->addGet('photo_show', '/photos/{id}', array(
+$router->addGet('photo_show', '/photo/{id}', array(
     '_controller' => 'Api\\Controller\\PhotosController::showAction'
 ), array(
     'id' => '\d+'
 ));
-$router->addGet('user_show', '/users/{id}', array(
+$router->addGet('user_show', '/user/{id}', array(
     '_controller' => 'Api\\Controller\\UsersController::showAction'
 ), array(
     'id' => '\d+'
@@ -140,11 +156,18 @@ $router->addGet('user_show', '/users/{id}', array(
 
 // REST API NEW ACTIONS 
 
-$router->addGet('article_new', '/articles', array(
+$router->addPost('article_new', '/articles', array(
     '_controller' => 'Api\\Controller\\ArticlesController::newAction'
 ));
 $router->addPost('category_new', '/categories', array(
     '_controller' => 'Api\\Controller\\CategoriesController::newAction'
+));
+$router->addPost('gallery_new', '/galleries', array(
+    '_controller' => 'Api\\Controller\\GalleriesController::newAction'
+));
+
+$router->addPost('comment_new', '/comments', array(
+    '_controller' => 'Api\\Controller\\ArticlesController::newCommentAction'
 ));
 
 // REST API UPDATE ACTIONS
@@ -154,10 +177,38 @@ $router->addPut('category_update', '/categories/{id}', array(
     'id' => '\d+'
 ));
 
+$router->addPut('article_update', '/articles/{id}', array(
+    '_controller' => 'Api\\Controller\\ArticlesController::updateAction'
+), array(
+    'id' => '\d+'
+));
+
+$router->addPut('gallery_update', '/galleries/{id}', array(
+    '_controller' => 'Api\\Controller\\GalleriesController::updateAction'
+), array(
+    'id' => '\d+'
+));
+
+$router->addPut('comment_update', '/comments/{id}', array(
+    '_controller' => 'Api\\Controller\\ArticlesController::updateCommentAction'
+), array(
+    'id' => '\d+'
+));
 
 // REST API DELETE ACTIONS
-$router->addDelete('category_delete', '/categories/{id}', array(
-    '_controller' => 'Api\\Controller\\CategoriesController::deleteAction'
+$router->addDelete('gallery_delete', '/galleries/{id}', array(
+    '_controller' => 'Api\\Controller\\GalleriesController::deleteAction'
+), array(
+    'id' => '\d+'
+));
+$router->addDelete('article_delete', '/articles/{id}', array(
+    '_controller' => 'Api\\Controller\\ArticlesController::deleteAction'
+), array(
+    'id' => '\d+'
+));
+
+$router->addDelete('gallery_delete', '/galleries/{id}', array(
+    '_controller' => 'Api\\Controller\\GalleriesController::deleteAction'
 ), array(
     'id' => '\d+'
 ));

@@ -73,4 +73,11 @@ class Categories extends Model
         )->execute();
     }
 
+    public function getPaginationList($from, $limit)
+    {
+        $sql = "SELECT *  FROM categories c ORDER BY c.cat_id DESC LIMIT " . $from . ', ' . $limit;
+        $result = $this->pdo->query($sql);
+        return $result->fetchAll();
+    }
+
 }

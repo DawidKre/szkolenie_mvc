@@ -10,9 +10,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CategoriesController extends Controller
 {
-    public function listAction()
+    public $limit = 3;
+
+    public function listAction(Request $request)
     {
-        $list = $this->getCategoriesModel()->getList();
+        $pageParameter = $request->get('page');
+        $currentPage = isSet($pageParameter) ? intval($pageParameter - 1) : 0;
+        $from = $currentPage * $this->limit;
+
+        $list = $this->getCategoriesModel()->getPaginationList($from, $this->limit);
+        //$list = $this->getCategoriesModel()->getList();
         return $this->render('', array(
             'categories' => $list
         ));
@@ -75,7 +82,6 @@ class CategoriesController extends Controller
         return $this->render('', array(
             'status' => Response::HTTP_NOT_FOUND
         ));
-        
     }
 
     /**
@@ -83,7 +89,7 @@ class CategoriesController extends Controller
      */
     public function getCategoriesModel()
     {
-        $Categories = new Categories($this->databaseConnection());
+        $Categories = $this->pdo(Categories::class);
         return $Categories;
     }
 

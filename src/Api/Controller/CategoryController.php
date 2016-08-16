@@ -77,7 +77,7 @@ class CategoryController extends Controller
      */
     private function getCategoryModel()
     {
-        $Category = new Category($this->databaseConnection());
+        $Category = $this->pdo(Category::class);
         return $Category;
     }
 
