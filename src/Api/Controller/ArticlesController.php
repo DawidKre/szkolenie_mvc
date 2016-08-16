@@ -34,10 +34,12 @@ class ArticlesController extends Controller
     {
         $article = $this->getArticlesModel()->getArticle($id);
         $comments = $this->getArticlesModel()->getCommentsList($id);
-        $tags = $this->getArticlesModel()->getTagsList($id);
+        $galId = $article['galleries_gal_id'];
+        $photos = $this->getArticlesModel()->getPhotos($galId);
         return $this->render('', array(
             'article' => $article,
-            'comments' => $comments
+            'comments' => $comments,
+            'photos' => $photos
         ));
     }
 
@@ -179,6 +181,4 @@ class ArticlesController extends Controller
         $Model = $this->pdo(Articles::class);
         return $Model;
     }
-
-
 }

@@ -118,12 +118,7 @@ $router->addGet('galleries_list', '/galleries/{page}/{limit}', array(
     'id' => '\d+',
     'limit' => '\d+'
 ));
-$router->addGet('photos_list', '/photos', array(
-    'page' => 1,
-    '_controller' => 'Api\\Controller\\PhotosController::listAction'
-), array(
-    'id' => '\d+'
-));
+
 $router->addGet('users_list', '/users/{page}/{limit}', array(
     'page' => 1,
     'limit' => 5,
@@ -150,11 +145,7 @@ $router->addGet('gallery_show', '/gallery/{id}', array(
 ), array(
     'id' => '\d+'
 ));
-$router->addGet('photo_show', '/photo/{id}', array(
-    '_controller' => 'Api\\Controller\\PhotosController::showAction'
-), array(
-    'id' => '\d+'
-));
+
 $router->addGet('user_show', '/user/{id}', array(
     '_controller' => 'Api\\Controller\\UsersController::showAction'
 ), array(
@@ -178,7 +169,7 @@ $router->addPost('user_new', '/users', array(
 $router->addPost('comment_new', '/comments', array(
     '_controller' => 'Api\\Controller\\ArticlesController::newCommentAction'
 ));
-$router->addPost('photo_new', '/photo', array(
+$router->addPost('photo_new', '/photos', array(
     '_controller' => 'Api\\Controller\\GalleriesController::newPhotoAction'
 ));
 

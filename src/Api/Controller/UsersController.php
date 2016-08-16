@@ -34,9 +34,11 @@ class UsersController extends Controller
     {
         $user = $this->getUsersModel()->getUser($id);
         $articles = $this->getUsersModel()->getUserArticles($id);
+        $comments = $this->getUsersModel()->getUserComments($id);
         return $this->render('', array(
             'user' => $user,
-            'articles' => $articles
+            'articles' => $articles,
+            'comments' => $comments
         ));
     }
 
@@ -108,6 +110,4 @@ class UsersController extends Controller
         $Model = $this->pdo(Users::class);
         return $Model;
     }
-
-
 }

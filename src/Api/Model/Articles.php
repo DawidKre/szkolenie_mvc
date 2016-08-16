@@ -18,10 +18,12 @@ class Articles extends Model
     public function getList()
     {
         $stmt = $this->pdo->query('
-          SELECT a.*, c.*, g.*  
+          SELECT a.*, c.*, g.*, u.*  
           FROM mydb.articles a 
           LEFT JOIN mydb.categories c 
           ON c.cat_id = a.art_cat_id
+          LEFT JOIN mydb.users u 
+          ON u.usr_id = a.art_usr_id
           LEFT JOIN mydb.galleries g 
           ON g.gal_id = a.galleries_gal_id'
         );
@@ -32,17 +34,17 @@ class Articles extends Model
     public function getArticle($id)
     {
         $stmt = $this->pdo->query("
-          SELECT a.*, c.*, com.*
+          SELECT a.*, c.*, u.*, g.*
           FROM mydb.articles a
           LEFT JOIN mydb.categories c 
           ON c.cat_id = a.art_cat_id
+          LEFT JOIN mydb.users u 
+          ON u.usr_id = a.art_usr_id
           LEFT JOIN mydb.galleries g 
           ON g.gal_id = a.galleries_gal_id
-          LEFT JOIN mydb.comments com 
-          ON com.cmt_art_id = a.art_id
           WHERE art_id = $id"
         );
-        return $stmt->fetch(PDO::FETCH_OBJ);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function createArticle($artTitle, $artSlug, $artStatus, $artBody, $artDate, $artCatId, $artUsrId, $artGalId)
@@ -149,10 +151,12 @@ class Articles extends Model
 
     public function getPaginationList($from, $limit)
     {
-        $sql = "SELECT a.*, c.*, g.*  
+        $sql = "SELECT a.*, c.*, g.*, u.*  
           FROM mydb.articles a 
           LEFT JOIN mydb.categories c 
           ON c.cat_id = a.art_cat_id
+          LEFT JOIN mydb.users u 
+          ON u.usr_id = a.art_usr_id
           LEFT JOIN mydb.galleries g 
           ON g.gal_id = a.galleries_gal_id 
           ORDER BY a.art_id DESC LIMIT " . $from . ', ' . $limit;
@@ -169,19 +173,31 @@ class Articles extends Model
         )->execute();
     }
 
-//    public function getTagsList($id)
-//    {
-//        $stmt = $this->pdo->query("
-//          SELECT t.*
-//          FROM mydb.tags_has_articles_has_tag t
-//           JOIN mydb.articles a ON a.art_id = t.articles_has_tag_tag_id
-//          WHERE t.tags_tag_id = $id"
-//        );
-//
-////        select c.*
-////  from post_category_bridge b
-////    join post_category c        on c.id = b.category_id
-////  where b.post_id = ?
-//        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-//    }
+
+    public function getTagsList($id)
+    {
+        $stmt = $this->pdo->query("
+          SELECT t.*
+          FROM mydb.tags_has_articles_has_tag t
+           JOIN mydb.articles a ON a.art_id = t.articles_has_tag_tag_id
+          WHERE t.tags_tag_id = $id"
+        );
+
+//        select c.*
+//  from post_category_bridge b
+//    join post_category c        on c.id = b.category_id
+//  where b.post_id = ?
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getPhotos($galId)
+    {
+        $stmt = $this->pdo->query("
+          SELECT p.*
+          FROM mydb.photos p
+          WHERE pht_gal_id = $galId"
+        );
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

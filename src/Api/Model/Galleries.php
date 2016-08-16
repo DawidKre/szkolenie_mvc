@@ -31,12 +31,8 @@ class Galleries extends Model
     public function getPaginationList($from, $limit)
     {
         $stmt = $this->pdo->query("
-            SELECT g.*, a.*, p.*  
-            FROM mydb.galleries g 
-            LEFT JOIN mydb.articles a 
-            ON g.gal_id = a.galleries_gal_id
-            LEFT JOIN mydb.photos p 
-            ON g.gal_id = p.pht_gal_id
+            SELECT g.*  
+            FROM mydb.galleries g
             LIMIT $from, $limit"
         );
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -53,7 +49,7 @@ class Galleries extends Model
             ON g.gal_id = p.pht_gal_id
             WHERE gal_id = $id"
         );
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function createGallery($galName)
@@ -69,24 +65,23 @@ class Galleries extends Model
 
     public function updateGallery($galId, $galName)
     {
-        {
-            $sth = $this->pdo->prepare("
-            UPDATE mydb.galleries
-            SET gal_name= :galName
-            WHERE gal_id = :galId"
-            );
-            $sth->bindParam(':galId', $galId);
-            $sth->bindParam(':galName', $galName);
-            return $sth->execute();
-        }
+
+        $sth = $this->pdo->prepare("
+        UPDATE mydb.galleries
+        SET gal_name= :galName
+        WHERE gal_id = :galId"
+        );
+        $sth->bindParam(':galId', $galId);
+        $sth->bindParam(':galName', $galName);
+        return $sth->execute();
+        
     }
 
     public function deleteGallery($id)
     {
         return $this->pdo->query("
             DELETE FROM mydb.galleries 
-            WHERE gal_id = $id"
-        )->execute();
+            WHERE gal_id = $id")->execute();
     }
 
     public function getPhotosList($id)
@@ -151,6 +146,16 @@ class Galleries extends Model
     {
         $count = $this->pdo->query("SELECT COUNT( gal_id ) as total FROM mydb.galleries")->fetch()['total'];
         return $count;
+    }
+
+    public function getArticlesList($id)
+    {
+        $stmt = $this->pdo->query("
+          SELECT a.*
+          FROM mydb.articles a 
+          WHERE galleries_gal_id = $id"
+        );
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }

@@ -20,7 +20,7 @@ class GalleriesController extends Controller
         $from = $currentPage * $limit;
         $count = $this->getGalleriesModel()->getTotalRecords();
         $totalPages = ceil($count / $limit);
-        $list = $this->getGalleriesModel()->getPaginationList($from, $$limit);
+        $list = $this->getGalleriesModel()->getPaginationList($from, $limit);
         return $this->render('', array(
             'galleries' => $list,
             'limit' => intval($limit),
@@ -33,9 +33,11 @@ class GalleriesController extends Controller
     {
         $article = $this->getGalleriesModel()->getGallery($id);
         $photos = $this->getGalleriesModel()->getPhotosList($id);
+        $articles = $this->getGalleriesModel()->getArticlesList($id);
         return $this->render('', array(
             'gallery' => $article,
-            'photos' => $photos
+            'photos' => $photos,
+            'articles' => $articles
         ));
     }
 
@@ -82,7 +84,6 @@ class GalleriesController extends Controller
             'status' => Response::HTTP_NOT_FOUND
         ));
     }
-
 
     public function newPhotoAction(Request $request)
     {

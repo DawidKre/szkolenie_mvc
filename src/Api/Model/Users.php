@@ -100,4 +100,14 @@ class Users extends Model
         );
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getUserComments($id)
+    {
+        $stmt = $this->pdo->query("
+          SELECT c.*
+          FROM mydb.comments c
+          WHERE cmt_usr_id = $id"
+        );
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
