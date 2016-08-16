@@ -85,4 +85,53 @@ class Galleries extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function createPhoto($phtSrc, $phtStorage, $phtMain, $phtGalId)
+    {
+        $sth = $this->pdo->prepare("
+        INSERT INTO mydb.photos(pht_src, pht_storage, pht_main, pht_gal_id) 
+        VALUES (:phtSrc, :phtStorage, :phtMain, :phtGalId)"
+        );
+        $sth->bindParam(':phtSrc', $phtSrc);
+        $sth->bindParam(':phtStorage', $phtStorage);
+        $sth->bindParam(':phtMain', $phtMain);
+        $sth->bindParam(':phtGalId', $phtGalId);
+
+        return $sth->execute();
+    }
+
+    public function updatePhoto($id, $phtSrc, $phtStorage, $phtMain, $phtGalId)
+    {
+        $sth = $this->pdo->prepare("
+            UPDATE mydb.photos
+            SET pht_src= :phtSrc, pht_storage= :phtStorage, pht_main= :phtMain, pht_gal_id= :phtGalId
+            WHERE pht_id = :id"
+        );
+        $sth->bindParam(':id', $id);
+        $sth->bindParam(':phtSrc', $phtSrc);
+        $sth->bindParam(':phtStorage', $phtStorage);
+        $sth->bindParam(':phtMain', $phtMain);
+        $sth->bindParam(':phtGalId', $phtGalId);
+
+        return $sth->execute();
+    }
+
+    public function getPhoto($id)
+    {
+        $stmt = $this->pdo->query("
+          SELECT p.*
+          FROM mydb.photos p
+          WHERE pht_id = $id"
+        );
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function deletePhoto($id)
+    {
+        return $this->pdo->query("
+            DELETE FROM mydb.photos 
+            WHERE pht_id = $id"
+        )->execute();
+    }
+
+
 }

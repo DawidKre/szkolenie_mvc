@@ -151,6 +151,20 @@ class ArticlesController extends Controller
             'status' => 404
         ));
     }
+
+    public function deleteCommentAction($id)
+    {
+        if (($this->getArticlesModel()->getComment($id))) {
+            $this->getArticlesModel()->deleteComment($id);
+            return $this->render('', array(
+                'status' => Response::HTTP_OK
+            ));
+        }
+        return $this->render('', array(
+            'status' => Response::HTTP_NOT_FOUND
+        ));
+    }
+    
     /**
      * @return Articles
      */

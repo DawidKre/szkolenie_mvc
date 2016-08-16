@@ -33,4 +33,47 @@ class Users extends Model
         );
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getPaginationList($from, $limit)
+    {
+        $sql = "SELECT *  FROM users u ORDER BY u.usr_id DESC LIMIT " . $from . ', ' . $limit;
+        $result = $this->pdo->query($sql);
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function updateUser($id, $usrName, $usrPassword, $usrEmail, $usrStatus, $usrRole, $usrDate)
+    {
+        $sth = $this->pdo->prepare("
+            UPDATE mydb.users
+            SET usr_name= :usrName, usr_password= :usrPassword, usr_email= :usrEmail, usr_status= :usrStatus,
+            usr_role= :usrRole, usr_date= :usrDate
+            WHERE usr_id = :usrId"
+        );
+        $sth->bindParam(':usrId', $id);
+        $sth->bindParam(':usrName', $usrName);
+        $sth->bindParam(':usrPassword', $usrPassword);
+        $sth->bindParam(':usrEmail', $usrEmail);
+        $sth->bindParam(':usrStatus', $usrStatus);
+        $sth->bindParam(':usrRole', $usrRole);
+        $sth->bindParam(':usrDate', $usrDate);
+
+        return $sth->execute();
+
+    }
+
+    public function createUser($usrName, $usrPassword, $usrEmail, $usrStatus, $usrRole, $usrDate)
+    {
+        $sth = $this->pdo->prepare("
+        INSERT INTO mydb.users(usr_name, usr_password, usr_email, usr_status, usr_role, usr_date) 
+        VALUES (:usrName, :usrPassword, :usrEmail, :usrStatus, :usrRole, :usrDate)"
+        );
+        $sth->bindParam(':usrName', $usrName);
+        $sth->bindParam(':usrPassword', $usrPassword);
+        $sth->bindParam(':usrEmail', $usrEmail);
+        $sth->bindParam(':usrStatus', $usrStatus);
+        $sth->bindParam(':usrRole', $usrRole);
+        $sth->bindParam(':usrDate', $usrDate);
+
+        return $sth->execute();
+    }
 }

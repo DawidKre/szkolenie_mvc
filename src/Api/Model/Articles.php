@@ -151,6 +151,14 @@ class Articles extends Model
     {
         $sql = "SELECT *  FROM articles a ORDER BY a.art_id DESC LIMIT " . $from . ', ' . $limit;
         $result = $this->pdo->query($sql);
-        return $result->fetchAll();
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteComment($id)
+    {
+        return $this->pdo->query("
+            DELETE FROM mydb.comments 
+            WHERE cmt_id = $id"
+        )->execute();
     }
 }

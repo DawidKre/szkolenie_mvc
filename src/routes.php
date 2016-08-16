@@ -165,9 +165,14 @@ $router->addPost('category_new', '/categories', array(
 $router->addPost('gallery_new', '/galleries', array(
     '_controller' => 'Api\\Controller\\GalleriesController::newAction'
 ));
-
+$router->addPost('user_new', '/users', array(
+    '_controller' => 'Api\\Controller\\UsersController::newAction'
+));
 $router->addPost('comment_new', '/comments', array(
     '_controller' => 'Api\\Controller\\ArticlesController::newCommentAction'
+));
+$router->addPost('photo_new', '/photo', array(
+    '_controller' => 'Api\\Controller\\GalleriesController::newPhotoAction'
 ));
 
 // REST API UPDATE ACTIONS
@@ -189,8 +194,19 @@ $router->addPut('gallery_update', '/galleries/{id}', array(
     'id' => '\d+'
 ));
 
+$router->addPut('user_update', '/users/{id}', array(
+    '_controller' => 'Api\\Controller\\UsersController::updateAction'
+), array(
+    'id' => '\d+'
+));
+
 $router->addPut('comment_update', '/comments/{id}', array(
     '_controller' => 'Api\\Controller\\ArticlesController::updateCommentAction'
+), array(
+    'id' => '\d+'
+));
+$router->addPut('photo_update', '/photos/{id}', array(
+    '_controller' => 'Api\\Controller\\GalleriesController::updatePhotoAction'
 ), array(
     'id' => '\d+'
 ));
@@ -209,6 +225,16 @@ $router->addDelete('article_delete', '/articles/{id}', array(
 
 $router->addDelete('gallery_delete', '/galleries/{id}', array(
     '_controller' => 'Api\\Controller\\GalleriesController::deleteAction'
+), array(
+    'id' => '\d+'
+));
+$router->addDelete('comment_delete', '/comments/{id}', array(
+    '_controller' => 'Api\\Controller\\ArticlesController::deleteCommentAction'
+), array(
+    'id' => '\d+'
+));
+$router->addDelete('photo_delete', '/photos/{id}', array(
+    '_controller' => 'Api\\Controller\\GalleriesController::deletePhotoAction'
 ), array(
     'id' => '\d+'
 ));

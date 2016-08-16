@@ -70,6 +70,68 @@ class GalleriesController extends Controller
             'status' => Response::HTTP_NOT_FOUND
         ));
     }
+
+
+    public function newPhotoAction(Request $request)
+    {
+        $phtSrc = $request->get('pht_src');
+        $phtStorage = $request->get('pht_storage');
+        $phtMain = $request->get('pht_main');
+        $phtGalId = $request->get('pht_gal_id');
+
+        if (($this->getGalleriesModel()
+            ->createPhoto($phtSrc, $phtStorage, $phtMain, $phtGalId))
+        ) {
+            return $this->render('', array(
+                'status' => Response::HTTP_CREATED
+            ), 201);
+        }
+        return $this->render('', array(
+            'status' => 404
+        ));
+
+    }
+
+    public function updatePhotoAction(Request $request, $id)
+    {
+        $photo = $this->getGalleriesModel()->getPhoto($id);
+
+        $phtSrc = $request->request->get('pht_src');
+        $phtStorage = $request->request->get('pht_storage');
+        $phtMain = $request->request->get('pht_main');
+        $phtGalId = $request->request->get('pht_gal_id');
+
+        if ($phtSrc == '') $phtSrc = $photo['pht_src'];
+        if ($phtStorage == '') $phtStorage = $photo['pht_storage'];
+        if ($phtMain == '') $phtMain = $photo['pht_main'];
+        if ($phtGalId == '') $phtGalId = $photo['pht_gal_id'];
+
+
+        if (($this->getGalleriesModel()->updatePhoto($id, $phtSrc, $phtStorage,
+            $phtMain, $phtGalId))
+        ) {
+            return $this->render('', array(
+                'status' => Response::HTTP_OK
+            ));
+        }
+        return $this->render('', array(
+            'status' => 404
+        ));
+    }
+
+    public function deletePhotoAction($id)
+    {
+        if (($this->getGalleriesModel()->getPhoto($id))) {
+            $this->getGalleriesModel()->deletePhoto($id);
+            return $this->render('', array(
+                'status' => Response::HTTP_OK
+            ));
+        }
+        return $this->render('', array(
+            'status' => Response::HTTP_NOT_FOUND
+        ));
+    }
+
     /**
      * @return Galleries
      */
@@ -78,6 +140,5 @@ class GalleriesController extends Controller
         $Model = $this->pdo(Galleries::class);
         return $Model;
     }
-
 
 }

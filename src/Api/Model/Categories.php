@@ -77,7 +77,7 @@ class Categories extends Model
     {
         $sql = "SELECT *  FROM categories c ORDER BY c.cat_id DESC LIMIT " . $from . ', ' . $limit;
         $result = $this->pdo->query($sql);
-        return $result->fetchAll();
+        return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }
