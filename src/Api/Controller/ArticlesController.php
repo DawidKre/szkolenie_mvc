@@ -22,7 +22,7 @@ class ArticlesController extends Controller
 
         $list = $this->getArticlesModel()->getPaginationList($from, $limit);
 
-        return $this->render('', array(
+        return $this->render('Api/view/articles/list.html.twig', array(
             'articles' => $list,
             'limit' => intval($limit),
             'total_pages' => $totalPages,
@@ -33,13 +33,13 @@ class ArticlesController extends Controller
     public function showAction($id)
     {
         $article = $this->getArticlesModel()->getArticle($id);
-        $comments = $this->getArticlesModel()->getCommentsList($id);
-        $galId = $article['galleries_gal_id'];
-        $photos = $this->getArticlesModel()->getPhotos($galId);
+        //$comments = $this->getArticlesModel()->getCommentsList($id);
+        //$galId = $article['galleries_gal_id'];
+        //$photos = $this->getArticlesModel()->getPhotos($galId);
         return $this->render('', array(
-            'article' => $article,
-            'comments' => $comments,
-            'photos' => $photos
+            'article' => $article
+//            'comments' => $comments,
+//            'photos' => $photos
         ));
     }
 

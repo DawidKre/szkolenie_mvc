@@ -1,0 +1,65 @@
+{% extends 'Api/view/layout.html.twig' %}
+
+{% block body %}
+
+
+    <div style="background:red;" id="element"></div>
+
+    {#<div class="btn">Jeden</div>#}
+    {#<div class="btn">Dwa</div>#}
+    {#<div class="btn">Trzy</div>#}
+    {##}
+
+    <h1>Lista artykułów</h1>
+
+    <div style="display:none" id="hid_form">
+        <form>
+            <input type="text" name="art_id">
+            <input type="text" name="art_title">
+            <input type="text" name="art_body">
+            <input type="text" name="cat_name">
+            <input type="text" name="gal_name">
+            <input type="text" name="usr_name">
+        </form>
+    </div>
+    <div><span class="btn btn-success newAction">Nowy artykuł</span></div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Tytuł</th>
+            <th>Opis</th>
+            <th>Kategoria</th>
+            <th>Galeria</th>
+            <th>User</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tr style="display:none" class="hid_form">
+            <form>
+                <td><input type="text" name="art_id"></td>
+                <td><input type="text" name="art_title"></td>
+                <td><input type="text" name="art_body"></td>
+                <td><input type="text" name="cat_id"></td>
+                <td><input type="text" name="gal_id"></td>
+                <td><input type="text" name="usr_id"></td>
+                <td>
+                    <div class="btn btn-info btn-sm saveAction">Zapisz</div>
+                </td>
+            </form>
+        </tr>
+        <tr style="display:none" class="hid_new_form">
+            <form id="newAction">
+                <td><input type="text" name="art_id"></td>
+                <td><input type="text" name="art_title"></td>
+                <td><input type="text" name="art_body"></td>
+                <td><input type="text" name="cat_id"></td>
+                <td><input type="text" name="gal_id"></td>
+                <td><input type="text" name="usr_id"></td>
+                <td>
+                    <div class="btn btn-info btn-sm newAction">Zapisz</div>
+                </td>
+            </form>
+        </tr>
+    </table>
+{% endblock %}

@@ -61,7 +61,7 @@ class ArticleController extends Controller
     public function showAction($id)
     {
         $article = $this->getArticleModel()->getArticle($id);
-        return $this->render('Api/view/article/show.html.twig', array(
+        return $this->render('Api/view/article/list.html.twig', array(
             'article' => $article
         ));
     }

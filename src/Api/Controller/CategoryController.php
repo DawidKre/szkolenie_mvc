@@ -47,7 +47,7 @@ class CategoryController extends Controller
     public function showAction($id)
     {
         $category = $this->getCategoryModel()->getCategory($id);
-        return $this->render('Api/view/category/show.html.twig', array(
+        return $this->render('Api/view/category/list.html.twig', array(
             'category' => $category
         ));
     }
