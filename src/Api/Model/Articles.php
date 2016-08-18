@@ -47,6 +47,16 @@ class Articles extends Model
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function getArticleWithoutJoin($id)
+    {
+        $stmt = $this->pdo->query("
+          SELECT *
+          FROM mydb.articles
+          WHERE art_id = $id"
+        );
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function createArticle($artTitle, $artSlug, $artStatus, $artBody, $artDate, $artCatId, $artUsrId, $artGalId)
     {
         $sth = $this->pdo->prepare("

@@ -32,7 +32,7 @@ class ArticlesController extends Controller
 
     public function showAction($id)
     {
-        $article = $this->getArticlesModel()->getArticle($id);
+        $article = $this->getArticlesModel()->getArticleWithoutJoin($id);
         //$comments = $this->getArticlesModel()->getCommentsList($id);
         //$galId = $article['galleries_gal_id'];
         //$photos = $this->getArticlesModel()->getPhotos($galId);
