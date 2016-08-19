@@ -1,6 +1,6 @@
 import books = require('./models/books');
 import articles = require('./models/articles');
-import {Articles} from "./models/articles";
+
 
 export class App {
     private articlesList;
@@ -10,7 +10,7 @@ export class App {
         var art = new articles.Articles();
         this.Article = art;
         art.getList((result) => {
-
+            $('#router-outlet').text('article');
             this.articlesList = result.articles;
             this.drawView();
             this.setFilter();

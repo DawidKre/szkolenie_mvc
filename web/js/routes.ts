@@ -1,18 +1,30 @@
-//var Routing = new router.Router();
-var routes = {};
+import app = require('./app/app');
+import {Category} from "./app/category";
 
-function route(path, controller) {
-    routes[path] = {controller: controller};
+export class Routes {
+
+    public routes = {};
+
+    constructor() {
+        this.route('#articles', function () {
+            var application = new app.App();
+            console.log('articles');
+        });
+        this.route('#page2', function () {
+            var category = new Category();
+            console.log('category');
+        });
+    }
+
+    public route(path, controller) {
+        this.routes[path] = {controller: controller};
+    }
+
+    public returnRoutes() {
+        return this.routes;
+    }
+    
 }
 
-route('#articles', function () {
-    var application = new app.App();
-    console.log('articles');
-});
-route('#page2', function () {
-    console.log('page2');
-});
 
-function returnRoutes() {
-    return this.routes;
-}
+

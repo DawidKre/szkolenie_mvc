@@ -1,14 +1,15 @@
 {% extends 'Api/view/layout.html.twig' %}
 
 {% block body %}
-    <div>
-             <input id="filter" type="text" value=""/>
-           
-    </div>
     <ul>
         <li><a href="#articles">Page 1</a></li>
         <li><a href="#page2">Page 2</a></li>
     </ul>
+    <div id="router-outlet">
+             <input id="filter" type="text" value=""/>
+           
+    </div>
+
     <div id="list">
              Loading...
            
@@ -17,5 +18,6 @@
         <form id="edit">
             </form>
     </div>
+
 
 {% endblock %}
