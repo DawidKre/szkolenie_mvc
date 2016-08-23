@@ -1,0 +1,28 @@
+<h3 class="first">Lista userów</h3>
+
+<button (click)="editUser()" class="btn btn-info">Nowy</button>
+
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Role</th>
+        <th>Data</th>
+        <th>Actions</th>
+    </tr>
+
+    <tr *ngFor="let user of users">
+        <td>{{user.usr_id}}</td>
+        <td>{{user.usr_name}}</td>
+        <td>{{user.usr_email}}</td>
+        <td>{{user.usr_status}}</td>
+        <td>{{user.usr_role}}</td>
+        <td>{{user.usr_date}}</td>
+        <td>
+            <button (click)="editUser(user)" class="btn btn-info">Edit</button>
+        </td>
+    </tr>
+
+</table>

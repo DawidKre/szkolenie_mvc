@@ -1,0 +1,32 @@
+<h3 class="first">Lista kategorii</h3>
+
+<div *ngIf="category">
+    <h3>
+    <span [ngSwitch]="category.cat_id">
+        <span *ngSwitchCase="0">Dodawanie</span>
+        <span *ngSwitchDefault>Edycja</span>
+    </span>
+
+        kategorii <i>{{category.cat_name}} #{{category.cat_status}}</i></h3>
+
+
+    <div class="form-group">
+        <label for="cat_name">Category name</label>
+        <input type="text" class="form-control" id="cat_name" placeholder="Name" [(ngModel)]="category.cat_name">
+    </div>
+    <div class="form-group">
+        <label for="cat_slug">Slug name</label>
+        <input type="text" class="form-control" id="cat_slug" placeholder="Name" [(ngModel)]="category.cat_slug">
+    </div>
+
+    <div class="form-group">
+        <label for="cat_status">Category status</label>
+        <select [(ngModel)]="category.cat_status" id="cat_status" name class="form-control">
+            <option *ngFor="let status of statusList" value="{{status.value}}">{{status.label}}</option>
+        </select>
+    </div>
+
+
+    <button type="submit" (click)="saveCategory(category)" class="btn btn-default">Save</button>
+
+</div>

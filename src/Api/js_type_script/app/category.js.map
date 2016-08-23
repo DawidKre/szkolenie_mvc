@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "category.js",
+  "sourceRoot": "",
+  "sources": [
+    "category.ts"
+  ],
+  "names": [],
+  "mappings": ";;IAAA;QAEI;YACI,CAAC,CAAC,gBAAgB,CAAC,CAAC,IAAI,CAAC,UAAU,CAAC,CAAC;YACrC,CAAC,CAAC,OAAO,CAAC,CAAC,IAAI,CAAC,UAAU,CAAC,CAAC;QAChC,CAAC;QAEL,eAAC;IAAD,CAAC,AAPD,IAOC;IAPY,gBAAQ,WAOpB,CAAA"
+}

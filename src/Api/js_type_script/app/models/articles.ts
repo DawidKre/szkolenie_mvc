@@ -77,7 +77,6 @@ export class Articles {
             dataType: "json",
             data: data,
         });
-
         request.done(successFunction);
     }
 
@@ -88,7 +87,6 @@ export class Articles {
             dataType: "json",
             data: data,
         });
-
         request.done(successFunction);
     }
 

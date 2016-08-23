@@ -44,9 +44,11 @@ class CategoriesController extends Controller
 
     public function newAction(Request $request)
     {
-        $catName = $request->get('cat_name');
-        $catSlug = $request->get('cat_slug');
-        $catStatus = $request->get('cat_status');
+        $data = json_decode($request->getContent(), true);
+
+        $catName = $data['cat_name'];
+        $catSlug = $data['cat_slug'];
+        $catStatus = $data['cat_status'];
 
         if (($this->getCategoriesModel()->createCategory($catName, $catSlug, $catStatus))) {
             return $this->render('', array(
@@ -60,11 +62,13 @@ class CategoriesController extends Controller
 
     public function updateAction(Request $request, $id)
     {
+        $data = json_decode($request->getContent(), true);
+        
         $category = $this->getCategoriesModel()->getCategory($id);
 
-        $catName = $request->request->get('cat_name');
-        $catSlug = $request->get('cat_slug');
-        $catStatus = $request->get('cat_status');
+        $catName = $data['cat_name'];
+        $catSlug = $data['cat_slug'];
+        $catStatus = $data['cat_status'];
 
         if ($catName == '') $catName = $category['cat_name'];
         if ($catSlug == '') $catSlug = $category['cat_slug'];

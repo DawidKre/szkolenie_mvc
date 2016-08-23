@@ -44,12 +44,14 @@ class UsersController extends Controller
 
     public function newAction(Request $request)
     {
-        $usrName = $request->get('usr_name');
-        $usrPassword = $request->get('usr_password');
-        $usrEmail = $request->get('usr_email');
-        $usrStatus = $request->get('usr_status');
-        $usrRole = $request->get('usr_role');
-        $usrDate = $request->get('usr_date');
+        $data = json_decode($request->getContent(), true);
+
+        $usrName = $data['usr_name'];
+        $usrPassword = $data['usr_password'];
+        $usrEmail = $data['usr_email'];
+        $usrStatus = $data['usr_status'];
+        $usrRole = $data['usr_role'];
+        $usrDate = $data['usr_date'];
 
         if (($this->getUsersModel()->createUser($usrName, $usrPassword, $usrEmail, $usrStatus, $usrRole, $usrDate))) {
             return $this->render('', array(
@@ -63,14 +65,16 @@ class UsersController extends Controller
 
     public function updateAction(Request $request, $id)
     {
+        $data = json_decode($request->getContent(), true);
+        
         $user = $this->getUsersModel()->getUser($id);
 
-        $usrName = $request->request->get('usr_name');
-        $usrPassword = $request->request->get('usr_password');
-        $usrEmail = $request->request->get('usr_email');
-        $usrStatus = $request->request->get('usr_status');
-        $usrRole = $request->request->get('usr_role');
-        $usrDate = $request->request->get('usr_date');
+        $usrName = $data['usr_name'];
+        $usrPassword = $data['usr_password'];
+        $usrEmail = $data['usr_email'];
+        $usrStatus = $data['usr_status'];
+        $usrRole = $data['usr_role'];
+        $usrDate = $data['usr_date'];
 
         if ($usrName == '') $usrName = $user['usr_name'];
         if ($usrPassword == '') $usrPassword = $user['usr_password'];

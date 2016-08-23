@@ -1,0 +1,22 @@
+<h3 class="first">Lista kategorii</h3>
+
+<button (click)="editCategory()" class="btn btn-info">Nowy</button>
+
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th colspan="2">Actions</th>
+    </tr>
+
+    <tr *ngFor="let category of categories">
+        <td>{{category.cat_id}}</td>
+        <td>{{category.cat_name}}</td>
+        <td>{{category.cat_status}}</td>
+        <td>
+            <button (click)="editCategory(category)" class="btn btn-info">Edit</button>
+        </td>
+    </tr>
+
+</table>
