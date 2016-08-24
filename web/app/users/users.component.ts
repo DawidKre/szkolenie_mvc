@@ -52,5 +52,13 @@ export class UsersComponent {
         }
     }
 
+    deleteUser(user) {
+        this.usersService.deleteUser(user.usr_id)
+            .subscribe(
+                result => this.getUsers(),
+                error => alert('onError: %s' + error)
+            );
+    }
+
 
 }

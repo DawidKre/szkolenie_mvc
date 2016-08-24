@@ -31,4 +31,9 @@ export class UsersService {
                 .map((res:Response) => res.json());
         }
     }
+
+    deleteUser(id:Number) {
+        return this.http.delete('/users/' + id + '.json')
+            .map((res:Response) => res.json());
+    }
 }

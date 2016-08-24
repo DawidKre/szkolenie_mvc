@@ -1,8 +1,6 @@
 import {Routes, RouterModule} from '@angular/router';
 import {CategoriesComponent}  from './categories/categories.component';
 import {CategoryEditComponent} from "./categories/category-edit.component";
-import {CategoriesComponent}  from './categories/categories.component';
-import {CategoryEditComponent} from "./categories/category-edit.component";
 import {UserEditComponent} from "./users/user-edit.component";
 import {UsersComponent} from "./users/users.component";
 

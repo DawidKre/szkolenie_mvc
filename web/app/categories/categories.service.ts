@@ -31,4 +31,9 @@ export class CategoriesService {
                 .map((res:Response) => res.json());
         }
     }
+
+    deleteCategory(catId:Number) {
+        return this.http.delete('/categories/' + catId + '.json')
+            .map((res:Response) => res.json());
+    }
 }

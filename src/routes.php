@@ -215,14 +215,19 @@ $router->addDelete('gallery_delete', '/galleries/{id}', array(
 ), array(
     'id' => '\d+'
 ));
+$router->addDelete('category_delete', '/categories/{id}', array(
+    '_controller' => 'Api\\Controller\\CategoriesController::deleteAction'
+), array(
+    'id' => '\d+'
+));
 $router->addDelete('article_delete', '/articles/{id}', array(
     '_controller' => 'Api\\Controller\\ArticlesController::deleteAction'
 ), array(
     'id' => '\d+'
 ));
 
-$router->addDelete('gallery_delete', '/galleries/{id}', array(
-    '_controller' => 'Api\\Controller\\GalleriesController::deleteAction'
+$router->addDelete('gallery_delete', '/users/{id}', array(
+    '_controller' => 'Api\\Controller\\UsersController::deleteAction'
 ), array(
     'id' => '\d+'
 ));
