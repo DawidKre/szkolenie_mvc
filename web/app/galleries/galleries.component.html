@@ -1,0 +1,23 @@
+<h3 class="first">Lista galleri</h3>
+
+<button (click)="editGallery()" class="btn btn-info">Nowy</button>
+
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+
+    <tr *ngFor="let gallery of galleries">
+        <td>{{gallery.gal_id}}</td>
+        <td>{{gallery.gal_name}}</td>
+        <td>
+            <button (click)="editGallery(gallery)" class="btn btn-info">Edit</button>
+        </td>
+        <td>
+            <button (click)="deleteGallery(gallery)" class="btn btn-danger">Usuń</button>
+        </td>
+    </tr>
+
+</table>

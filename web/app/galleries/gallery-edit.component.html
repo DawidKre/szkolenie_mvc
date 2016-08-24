@@ -1,0 +1,17 @@
+<h3 class="first">Lista Galerii</h3>
+
+<div *ngIf="gallery">
+    <h3>
+    <span [ngSwitch]="gallery.gal_id">
+        <span *ngSwitchCase="0">Dodawanie</span>
+        <span *ngSwitchDefault>Edycja</span>
+    </span>
+        galleries <i>{{gallery.gal_name}} #{{gallery.gal_name}}</i></h3>
+    <div class="form-group">
+        <label for="gal_name">gallery name</label>
+        <input type="text" class="form-control" id="gal_name" placeholder="Name" [(ngModel)]="gallery.gal_name">
+    </div>
+
+    <button type="submit" (click)="saveGallery(gallery)" class="btn btn-default">Save</button>
+
+</div>

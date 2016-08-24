@@ -33,26 +33,29 @@ class ArticlesController extends Controller
     public function showAction($id)
     {
         $article = $this->getArticlesModel()->getArticleWithoutJoin($id);
-        //$comments = $this->getArticlesModel()->getCommentsList($id);
-        //$galId = $article['galleries_gal_id'];
-        //$photos = $this->getArticlesModel()->getPhotos($galId);
+        $comments = $this->getArticlesModel()->getCommentsList($id);
+        $galId = $article['galleries_gal_id'];
+        $photos = $this->getArticlesModel()->getPhotos($galId);
+        
         return $this->render('', array(
-            'article' => $article
-//            'comments' => $comments,
-//            'photos' => $photos
+            'article' => $article,
+            'comments' => $comments,
+            'photos' => $photos
         ));
     }
 
     public function newAction(Request $request)
     {
-        $artTitle = $request->request->get('art_title');
-        $artySlug = $request->get('art_slug');
-        $artStatus = $request->get('art_status');
-        $artBody = $request->get('art_body');
-        $artDate = $request->get('art_date');
-        $artCatId = $request->get('art_cat_id');
-        $artUsrId = $request->get('art_usr_id');
-        $artGalId = $request->get('galleries_gal_id');
+        $data = json_decode($request->getContent(), true);
+
+        $artTitle = $data['art_title'];
+        $artySlug = $data['art_slug'];
+        $artStatus = $data['art_status'];
+        $artBody = $data['art_body'];
+        $artDate = $data['art_date'];
+        $artCatId = $data['art_cat_id'];
+        $artUsrId = $data['art_usr_id'];
+        $artGalId = $data['galleries_gal_id'];
 
         if (($this->getArticlesModel()
             ->createArticle($artTitle, $artySlug, $artStatus, $artBody, $artDate, $artCatId, $artUsrId, $artGalId))
@@ -70,14 +73,16 @@ class ArticlesController extends Controller
     {
         $article = $this->getArticlesModel()->getArticle($id);
 
-        $artTitle = $request->request->get('art_title');
-        $artSlug = $request->request->get('art_slug');
-        $artStatus = $request->request->get('art_status');
-        $artBody = $request->request->get('art_body');
-        $artDate = $request->request->get('art_date');
-        $artCatId = $request->request->get('art_cat_id');
-        $artUsrId = $request->request->get('art_usr_id');
-        $artGalId = $request->request->get('galleries_gal_id');
+        $data = json_decode($request->getContent(), true);
+
+        $artTitle = $data['art_title'];
+        $artSlug = $data['art_slug'];
+        $artStatus = $data['art_status'];
+        $artBody = $data['art_body'];
+        $artDate = $data['art_date'];
+        $artCatId = $data['art_cat_id'];
+        $artUsrId = $data['art_usr_id'];
+        $artGalId = $data['galleries_gal_id'];
 
         if ($artTitle == '') $artTitle = $article['art_title'];
         if ($artSlug == '') $artSlug = $article['art_slug'];

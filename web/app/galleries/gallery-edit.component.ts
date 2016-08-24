@@ -1,33 +1,28 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {User} from './user';
-import {UsersService} from './users.service';
+import {Gallery} from './gallery';
+import {GalleriesService} from './galleries.service';
 
 
 @Component({
     selector: 'my-app',
-    templateUrl: 'app/users/user-edit.component.html',
-    providers: [UsersService]
+    templateUrl: 'app/galleries/gallery-edit.component.html',
+    providers: [GalleriesService]
 })
 
-export class UserEditComponent implements OnInit, OnDestroy {
+export class GalleryEditComponent implements OnInit, OnDestroy {
 
-    user:User;
+    gallery:Gallery;
     statusList:Array<Object>;
     sub:any;
 
     constructor(private router:Router,
                 private route:ActivatedRoute,
-                private usersService:UsersService) {
+                private galleriesService:GalleriesService) {
 
-        this.user = {
-            usr_id: 0,
-            usr_name: '',
-            usr_password: '',
-            usr_email: '',
-            usr_status: 0,
-            usr_role: 0,
-            usr_date: '',
+        this.gallery = {
+            gal_id: 0,
+            gal_name: ''
         };
 
         this.statusList = [
@@ -41,10 +36,10 @@ export class UserEditComponent implements OnInit, OnDestroy {
             let id = +params['id'];
 
             if (id) {
-                this.usersService.getUser(id)
+                this.galleriesService.getGallery(id)
                     .subscribe(
-                        user => {
-                            this.user = user.user;
+                        gallery => {
+                            this.gallery = gallery.gallery;
                         },
                         error => console.log('onError: %s', error)
                     );
@@ -56,17 +51,17 @@ export class UserEditComponent implements OnInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
-    saveUser() {
-        this.usersService.saveUser(this.user)
+    saveGallery() {
+        this.galleriesService.saveGallery(this.gallery)
             .subscribe(
                 () => {
-                    this.router.navigate(['/backoffice/users'])
+                    this.router.navigate(['/backoffice/galleries'])
                 },
                 error => console.log('onError: %s', error)
             );
     }
 
-    backTousers() {
-        this.router.navigate(['/backoffice/users'])
+    backToGalleries() {
+        this.router.navigate(['/backoffice/galleries'])
     }
 }

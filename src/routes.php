@@ -226,7 +226,7 @@ $router->addDelete('article_delete', '/articles/{id}', array(
     'id' => '\d+'
 ));
 
-$router->addDelete('gallery_delete', '/users/{id}', array(
+$router->addDelete('user_delete', '/users/{id}', array(
     '_controller' => 'Api\\Controller\\UsersController::deleteAction'
 ), array(
     'id' => '\d+'

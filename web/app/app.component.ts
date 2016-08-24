@@ -6,5 +6,5 @@ import './rxjs-extensions';
     templateUrl: 'app/app.component.html'
 })
 export class AppComponent {
-    title = 'Tytul zmiennej';
+
 }

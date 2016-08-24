@@ -10,7 +10,7 @@
         <th colspan="2">Actions</th>
     </tr>
 
-    <tr remove *ngFor="let category of categories" id="#remove">
+    <tr *ngFor="let category of categories" id="#remove">
         <td>{{category.cat_id}}</td>
         <td>{{category.cat_name}}</td>
         <td>{{category.cat_status}}</td>
@@ -19,7 +19,7 @@
         </td>
         <td>
             <button (click)="deleteCategory(category)" class="btn 
-            btn-info">Usuń
+            btn-danger">Usuń
             </button>
         </td>
     </tr>

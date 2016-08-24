@@ -1,0 +1,48 @@
+<h3 class="first">Lista Artykułów</h3>
+
+<div *ngIf="article">
+    <h3>
+    <span [ngSwitch]="article.art_id">
+        <span *ngSwitchCase="0">Dodawanie</span>
+        <span *ngSwitchDefault>Edycja</span>
+    </span>
+        article <i>{{article.art_title}} #{{article.art_slug}}</i></h3>
+    <div class="form-group">
+        <label for="art_title">article title</label>
+        <input type="text" class="form-control" id="art_title" placeholder="Title" [(ngModel)]="article.art_title">
+    </div>
+    <div class="form-group">
+        <label for="art_slug">article slug</label>
+        <input type="text" class="form-control" id="art_slug" placeholder="Name" [(ngModel)]="article.art_slug">
+    </div>
+    <div class="form-group">
+        <label for="art_status">Article status</label>
+        <select [(ngModel)]="article.art_status" id="art_status" name class="form-control">
+            <option *ngFor="let status of statusList" value="{{status.value}}">{{status.label}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="art_body">article body</label>
+        <textarea class="form-control" id="art_body" placeholder="Body" [(ngModel)]="article.art_body">
+        </textarea>
+    </div>
+    <div class="form-group">
+        <label for="art_date">article date</label>
+        <input type="text" class="form-control" id="art_date" placeholder="Body" [(ngModel)]="article.art_date">
+    </div>
+    <div class="form-group">
+        <label for="art_cat_id">article cat id</label>
+        <input type="text" class="form-control" id="art_cat_id" placeholder="Body" [(ngModel)]="article.art_cat_id">
+    </div>
+    <div class="form-group">
+        <label for="art_usr_id">article user id</label>
+        <input type="text" class="form-control" id="art_usr_id" placeholder="Body" [(ngModel)]="article.art_usr_id">
+    </div>
+    <div class="form-group">
+        <label for="galleries_gal_id">article gal id</label>
+        <input type="text" class="form-control" id="galleries_gal_id" placeholder="Body"
+               [(ngModel)]="article.galleries_gal_id">
+    </div>
+    <button type="submit" (click)="saveArticle(article)" class="btn btn-default">Save</button>
+
+</div>

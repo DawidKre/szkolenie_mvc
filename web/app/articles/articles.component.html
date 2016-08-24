@@ -1,0 +1,39 @@
+<h3 class="first">Lista Artkułów</h3>
+
+<button (click)="editArticle()" class="btn btn-info">Nowy</button>
+
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Tytuł</th>
+        <th>Slug</th>
+        <th>Status</th>
+        <th>Body</th>
+        <th>Data</th>
+        <th>Cat id</th>
+        <th>Usr id</th>
+        <th>Gal id</th>
+    </tr>
+
+    <tr *ngFor="let article of articles">
+        <td>{{article.art_id}}</td>
+        <td>{{article.art_title}}</td>
+        <td>{{article.art_slug}}</td>
+        <td>{{article.art_status}}</td>
+        <td>{{article.art_body}}</td>
+        <td>{{article.art_date}}</td>
+        <td>{{article.art_cat_id}}</td>
+        <td>{{article.art_usr_id}}</td>
+        <td>{{article.galleries_gal_id}}</td>
+        <td>
+            <button (click)="editArticle(article)" class="btn btn-info">Edit</button>
+        </td>
+        <td>
+            <button (click)="deleteArticle(article)" class="btn btn-danger">Usuń</button>
+        </td>
+        <td>
+            <button (click)="showArticle(article)" class="btn btn-default">Pokaż</button>
+        </td>
+    </tr>
+
+</table>

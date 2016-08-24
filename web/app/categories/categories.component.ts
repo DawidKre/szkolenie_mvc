@@ -4,11 +4,6 @@ import {Router} from '@angular/router';
 
 import {Category} from './category';
 import {CategoriesService} from './categories.service';
-import {element} from "@angular/upgrade/src/angular_js";
-import classElement = ts.ScriptElementKind.classElement;
-import {el, el} from "@angular/platform-browser/esm/testing/browser_util";
-import filter = require("core-js/fn/array/filter");
-
 
 @Component({
     templateUrl: 'app/categories/categories.component.html',
@@ -19,7 +14,7 @@ import filter = require("core-js/fn/array/filter");
 export class CategoriesComponent {
 
     categories:Array<Category>;
-    category:Array<any>;
+    category:Array<Category>;
 
     constructor(private categoriesService:CategoriesService,
                 private router:Router) {

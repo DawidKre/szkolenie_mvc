@@ -43,8 +43,9 @@ class GalleriesController extends Controller
 
     public function newAction(Request $request)
     {
-        $galName = $request->get('gal_name');
-
+        $data = json_decode($request->getContent(), true);
+        $galName = $data['gal_name'];
+        
         if (($this->getGalleriesModel()->createGallery($galName))) {
             return $this->render('', array(
                 'status' => Response::HTTP_CREATED
@@ -58,7 +59,9 @@ class GalleriesController extends Controller
     public function updateAction(Request $request, $id)
     {
         $gallery = $this->getGalleriesModel()->getGallery($id);
-        $galName = $request->request->get('gal_name');
+
+        $data = json_decode($request->getContent(), true);
+        $galName = $data['gal_name'];
 
         if ($galName == '') $galName = $gallery['gal_name'];
 
