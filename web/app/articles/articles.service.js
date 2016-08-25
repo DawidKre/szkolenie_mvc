@@ -15,11 +15,15 @@ var ArticlesService = (function () {
         this.http = http;
     }
     ArticlesService.prototype.getArticles = function (page) {
-        return this.http.get('/articles/' + page + '/40.json')
+        return this.http.get('/articles/' + page + '.json')
             .map(function (res) { return res.json(); });
     };
     ArticlesService.prototype.getArticle = function (id) {
         return this.http.get('/article/' + id + '.json')
+            .map(function (res) { return res.json(); });
+    };
+    ArticlesService.prototype.getArticleComments = function (id, page) {
+        return this.http.get('/article/comments/' + id + '/' + page + '.json')
             .map(function (res) { return res.json(); });
     };
     ArticlesService.prototype.saveArticle = function (article) {
@@ -34,8 +38,18 @@ var ArticlesService = (function () {
                 .map(function (res) { return res.json(); });
         }
     };
+    ArticlesService.prototype.saveComment = function (comment) {
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.post('/comments.json', JSON.stringify(comment), { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
     ArticlesService.prototype.deleteArticle = function (id) {
         return this.http.delete('/articles/' + id + '.json')
+            .map(function (res) { return res.json(); });
+    };
+    ArticlesService.prototype.deleteComment = function (id) {
+        return this.http.delete('/comments/' + id + '.json')
             .map(function (res) { return res.json(); });
     };
     ArticlesService = __decorate([

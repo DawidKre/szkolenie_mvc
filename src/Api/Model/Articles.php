@@ -79,8 +79,14 @@ class Articles extends Model
     {
         $sth = $this->pdo->prepare("
             UPDATE mydb.articles
-            SET art_title= :artTitle, art_slug= :artSlug, art_status= :artStatus, art_body= :artBody, art_date= 
-            :artDate, art_cat_id= :artCatId, art_usr_id= :artUsrId, galleries_gal_id= :artGalId
+            SET art_title= :artTitle, 
+            art_slug= :artSlug, 
+            art_status= :artStatus, 
+            art_body= :artBody, 
+            art_date= :artDate, 
+            art_cat_id= :artCatId, 
+            art_usr_id= :artUsrId, 
+            galleries_gal_id= :artGalId
             WHERE art_id = :artId"
         );
         $sth->bindParam(':artId', $artId);
@@ -159,6 +165,17 @@ class Articles extends Model
         return $count;
     }
 
+    public function getTotalCommentsRecords($artId)
+    {
+        $count = $this->pdo->query("
+            SELECT COUNT( cmt_id ) 
+            as total 
+            FROM mydb.comments c
+            WHERE c.cmt_art_id = $artId
+            ")->fetch()['total'];
+        return $count;
+    }
+
     public function getPaginationList($from, $limit)
     {
         $sql = "SELECT a.*, c.*, g.*, u.*  
@@ -170,6 +187,19 @@ class Articles extends Model
           LEFT JOIN mydb.galleries g 
           ON g.gal_id = a.galleries_gal_id 
           ORDER BY a.art_id DESC LIMIT " . $from . ', ' . $limit;
+
+        $result = $this->pdo->query($sql);
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getPaginationCommentsList($from, $limit, $artId)
+    {
+        $sql = "SELECT c.*, u.*
+          FROM mydb.comments c 
+          LEFT JOIN mydb.users u 
+          ON c.cmt_usr_id = u.usr_id
+          WHERE c.cmt_art_id = $artId
+          ORDER BY c.cmt_id DESC LIMIT " . $from . ', ' . $limit;
 
         $result = $this->pdo->query($sql);
         return $result->fetchAll(PDO::FETCH_ASSOC);

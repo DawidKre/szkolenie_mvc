@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Headers, Response} from '@angular/http';
 
 import {Article} from "./article";
+import {Comment} from "./comment";
 
 @Injectable()
 export class ArticlesService {
@@ -9,12 +10,17 @@ export class ArticlesService {
     }
 
     getArticles(page:Number) {
-        return this.http.get('/articles/' + page + '/40.json')
+        return this.http.get('/articles/' + page + '.json')
             .map((res:Response) => res.json());
     }
 
     getArticle(id:Number) {
         return this.http.get('/article/' + id + '.json')
+            .map((res:Response) => res.json());
+    }
+
+    getArticleComments(id:Number, page:Number) {
+        return this.http.get('/article/comments/' + id + '/' + page + '.json')
             .map((res:Response) => res.json());
     }
 
@@ -31,8 +37,22 @@ export class ArticlesService {
         }
     }
 
+    saveComment(comment:Comment) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        return this.http.post('/comments.json', JSON.stringify(comment), {headers: headers})
+            .map((res:Response) => res.json());
+
+    }
+
     deleteArticle(id:Number) {
         return this.http.delete('/articles/' + id + '.json')
+            .map((res:Response) => res.json());
+    }
+
+    deleteComment(id:Number) {
+        return this.http.delete('/comments/' + id + '.json')
             .map((res:Response) => res.json());
     }
 }

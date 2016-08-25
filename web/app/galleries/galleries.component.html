@@ -19,5 +19,9 @@
             <button (click)="deleteGallery(gallery)" class="btn btn-danger">Usuń</button>
         </td>
     </tr>
-
+    <div *ngIf="totalItems > 0">
+        <ng-pagination ngDefaultControl [totalItems]="totalItems" [(ngModel)]="currentPage" [maxSize]="maxSize"
+                       (pageChanged)="pageChanged()"
+                       first-text="First" last-text="Last"></ng-pagination>
+    </div>
 </table>

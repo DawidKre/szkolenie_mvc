@@ -4,9 +4,7 @@ import {Router} from '@angular/router';
 import {User} from './user';
 import {UsersService} from './users.service';
 
-@Component({
-    templateUrl: 'app/users/users.component.html'
-})
+
 @Component({
     templateUrl: 'app/users/users.component.html',
     providers: [UsersService]
@@ -16,6 +14,9 @@ export class UsersComponent {
 
     users:Array<User>;
     category:Array<any>;
+    public currentPage:number = 1;
+    public totalItems = 0;
+    public maxSize:number = 5;
 
     constructor(private usersService:UsersService,
                 private router:Router) {
@@ -25,10 +26,11 @@ export class UsersComponent {
 
     getUsers() {
 
-        this.usersService.getUsers(1)
+        this.usersService.getUsers(this.currentPage)
             .subscribe(
                 users => {
                     this.users = users.users;
+                    this.totalItems = users.count;
                 },
                 error => console.log('onError: %s', error)
             );
@@ -59,6 +61,10 @@ export class UsersComponent {
                 error => alert('onError: %s' + error)
             );
     }
+
+    public pageChanged():void {
+        this.getUsers();
+    };
 
 
 }

@@ -10,7 +10,7 @@ export class CategoriesService {
     }
 
     getCategories(page:Number) {
-        return this.http.get('/categories/' + page + '/40.json')
+        return this.http.get('/categories/' + page + '.json')
             .map((res:Response) => res.json());
     }
 

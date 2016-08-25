@@ -10,7 +10,7 @@ export class UsersService {
     }
 
     getUsers(page:Number) {
-        return this.http.get('/users/' + page + '/40.json')
+        return this.http.get('/users/' + page + '   .json')
             .map((res:Response) => res.json());
     }
 

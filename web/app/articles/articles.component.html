@@ -20,7 +20,7 @@
         <td>{{article.art_title}}</td>
         <td>{{article.art_slug}}</td>
         <td>{{article.art_status}}</td>
-        <td>{{article.art_body}}</td>
+        <td>{{article.art_body | truncate : 120 : '---' }}</td>
         <td>{{article.art_date}}</td>
         <td>{{article.art_cat_id}}</td>
         <td>{{article.art_usr_id}}</td>
@@ -35,5 +35,10 @@
             <button (click)="showArticle(article)" class="btn btn-default">Pokaż</button>
         </td>
     </tr>
+    <div *ngIf="totalItems > 0">
+        <ng-pagination ngDefaultControl [totalItems]="totalItems" [(ngModel)]="currentPage" [maxSize]="maxSize"
+                       (pageChanged)="pageChanged()"
+                       first-text="First" last-text="Last"></ng-pagination>
+    </div>
 
 </table>

@@ -9,7 +9,7 @@ export class GalleriesService {
     }
 
     getGalleries(page:Number) {
-        return this.http.get('/galleries/' + page + '/40.json')
+        return this.http.get('/galleries/' + page + '.json')
             .map((res:Response) => res.json());
     }
 

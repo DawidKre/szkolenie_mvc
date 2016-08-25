@@ -120,10 +120,11 @@ class ArticlesController extends Controller
 
     public function newCommentAction(Request $request)
     {
-        $cmtBody = $request->get('cmt_body');
-        $cmtStatus = $request->get('cmt_status');
-        $cmtUsrId = $request->get('cmt_usr_id');
-        $cmtArtId = $request->get('cmt_art_id');
+        $data = json_decode($request->getContent(), true);
+        $cmtBody = $data['cmt_body'];
+        $cmtStatus = $data['cmt_status'];
+        $cmtUsrId = $data['cmt_usr_id'];
+        $cmtArtId = $data['cmt_art_id'];
 
         if (($this->getArticlesModel()
             ->createComment($cmtBody, $cmtStatus, $cmtUsrId, $cmtArtId))
@@ -178,6 +179,26 @@ class ArticlesController extends Controller
         ));
     }
 
+    public function articleCommentsAction(Request $request)
+    {
+        $artId = $request->get('artId');
+        $pageParameter = $request->get('page');
+        $limit = $request->get('limit');
+        if ($limit > 20) $limit = 20;
+        $currentPage = isSet($pageParameter) ? intval($pageParameter - 1) : 0;
+        $from = $currentPage * $limit;
+        $count = $this->getArticlesModel()->getTotalCommentsRecords($artId);
+        $totalPages = ceil($count / $limit);
+
+        $list = $this->getArticlesModel()->getPaginationCommentsList($from, $limit, $artId);
+
+        return $this->render('Api/view/articles/list.html.twig', array(
+            'comments' => $list,
+            'limit' => intval($limit),
+            'total_pages' => $totalPages,
+            'count' => $count,
+        ));
+    }
     /**
      * @return Articles
      */

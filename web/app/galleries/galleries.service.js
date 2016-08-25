@@ -15,7 +15,7 @@ var GalleriesService = (function () {
         this.http = http;
     }
     GalleriesService.prototype.getGalleries = function (page) {
-        return this.http.get('/galleries/' + page + '/40.json')
+        return this.http.get('/galleries/' + page + '.json')
             .map(function (res) { return res.json(); });
     };
     GalleriesService.prototype.getGallery = function (id) {

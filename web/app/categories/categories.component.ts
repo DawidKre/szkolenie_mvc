@@ -1,13 +1,15 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
-
+import {NgModel} from "@angular/common";
 
 import {Category} from './category';
 import {CategoriesService} from './categories.service';
+import {PaginationDirective} from "../directives/pagination.directive";
+
 
 @Component({
     templateUrl: 'app/categories/categories.component.html',
-    providers: [CategoriesService]
+    providers: [CategoriesService, PaginationDirective, NgModel]
 })
 
 
@@ -15,6 +17,9 @@ export class CategoriesComponent {
 
     categories:Array<Category>;
     category:Array<Category>;
+    public currentPage:number = 1;
+    public totalItems = 0;
+    public maxSize:number = 5;
 
     constructor(private categoriesService:CategoriesService,
                 private router:Router) {
@@ -23,11 +28,11 @@ export class CategoriesComponent {
     }
 
     getCategories() {
-        this.categoriesService.getCategories(1)
+        this.categoriesService.getCategories(this.currentPage)
             .subscribe(
                 categories => {
                     this.categories = categories.categories;
-                    console.log(categories.categories);
+                    this.totalItems = categories.count;
                 },
                 error => console.log('onError: %s', error)
             );
@@ -48,6 +53,10 @@ export class CategoriesComponent {
                 error => alert('onError: %s' + error)
             );
     }
+
+    public pageChanged():void {
+        this.getCategories();
+    };
 
 
 }

@@ -10,18 +10,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
+var common_1 = require("@angular/common");
 var galleries_service_1 = require('./galleries.service');
+var pagination_directive_1 = require("../directives/pagination.directive");
 var GalleriesComponent = (function () {
     function GalleriesComponent(galleriesService, router) {
         this.galleriesService = galleriesService;
         this.router = router;
+        this.currentPage = 1;
+        this.totalItems = 0;
+        this.maxSize = 5;
         this.getGalleries();
     }
     GalleriesComponent.prototype.getGalleries = function () {
         var _this = this;
-        this.galleriesService.getGalleries(1)
+        this.galleriesService.getGalleries(this.currentPage)
             .subscribe(function (galleries) {
             _this.galleries = galleries.galleries;
+            _this.totalItems = galleries.count;
         }, function (error) { return console.log('onError: %s', error); });
     };
     GalleriesComponent.prototype.getGallery = function (id) {
@@ -44,10 +50,14 @@ var GalleriesComponent = (function () {
         this.galleriesService.deleteGallery(gallery.gal_id)
             .subscribe(function (result) { return _this.getGalleries(); }, function (error) { return alert('onError: %s' + error); });
     };
+    GalleriesComponent.prototype.pageChanged = function () {
+        this.getGalleries();
+    };
+    ;
     GalleriesComponent = __decorate([
         core_1.Component({
             templateUrl: 'app/galleries/galleries.component.html',
-            providers: [galleries_service_1.GalleriesService]
+            providers: [galleries_service_1.GalleriesService, pagination_directive_1.PaginationDirective, common_1.NgModel]
         }), 
         __metadata('design:paramtypes', [galleries_service_1.GalleriesService, router_1.Router])
     ], GalleriesComponent);

@@ -99,7 +99,16 @@ $router->addGet('articles_list', '/articles/{page}/{limit}', array(
     'limit' => 5,
     '_controller' => 'Api\\Controller\\ArticlesController::listAction'
 ), array(
-    'id' => '\d+',
+    'page' => '\d+',
+    'limit' => '\d+'
+));
+$router->addGet('article_comments_list', '/article/comments/{artId}/{page}/{limit}', array(
+    'page' => 1,
+    'limit' => 5,
+    '_controller' => 'Api\\Controller\\ArticlesController::articleCommentsAction'
+), array(
+    'artId' => '\d+',
+    'page' => '\d+',
     'limit' => '\d+'
 ));
 $router->addGet('categories_list', '/categories/{page}/{limit}', array(

@@ -1,18 +1,23 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
+import {NgModel} from "@angular/common";
 
 import {Gallery} from './gallery';
 import {GalleriesService} from './galleries.service';
+import {PaginationDirective} from "../directives/pagination.directive";
 
 @Component({
     templateUrl: 'app/galleries/galleries.component.html',
-    providers: [GalleriesService]
+    providers: [GalleriesService, PaginationDirective, NgModel]
 })
 
 export class GalleriesComponent {
 
     galleries:Array<Gallery>;
     gallery:Array<Gallery>;
+    public currentPage:number = 1;
+    public totalItems = 0;
+    public maxSize:number = 5;
 
     constructor(private galleriesService:GalleriesService,
                 private router:Router) {
@@ -21,10 +26,11 @@ export class GalleriesComponent {
     }
 
     getGalleries() {
-        this.galleriesService.getGalleries(1)
+        this.galleriesService.getGalleries(this.currentPage)
             .subscribe(
                 galleries => {
                     this.galleries = galleries.galleries;
+                    this.totalItems = galleries.count;
                 },
                 error => console.log('onError: %s', error)
             );
@@ -55,6 +61,10 @@ export class GalleriesComponent {
                 error => alert('onError: %s' + error)
             );
     }
+
+    public pageChanged():void {
+        this.getGalleries();
+    };
 
 
 }

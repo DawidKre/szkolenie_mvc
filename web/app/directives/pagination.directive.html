@@ -1,0 +1,7 @@
+<ul class="pagination">
+    <li *ngIf="firstText" (click)="firstPage()"><a [innerHTML]="firstText">First</a></li>
+    <li *ngFor="let pageNo of pageList" [ngClass]="{'active':seletedPage === pageNo}">
+        <a (click)="setCurrentPage(pageNo)">{{pageNo}}</a>
+    </li>
+    <li><a *ngIf="lastText" (click)="lastPage()" [innerHTML]="lastText">Last</a></li>
+</ul>

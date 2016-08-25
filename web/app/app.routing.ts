@@ -8,6 +8,7 @@ import {GalleryEditComponent} from "./galleries/gallery-edit.component";
 import {ArticlesComponent} from "./articles/articles.component";
 import {ArticleEditComponent} from "./articles/article-edit.component";
 import {ArticleShowComponent} from "./articles/article-show.component";
+import {GalleryPhotoComponent} from "./galleries/gallery-photo.component";
 
 const appRoutes:Routes = [
     {
@@ -33,6 +34,10 @@ const appRoutes:Routes = [
     {
         path: 'backoffice/gallery/:id',
         component: GalleryEditComponent
+    },
+    {
+        path: 'backoffice/gallery-photo',
+        component: GalleryPhotoComponent
     },
     {
         path: 'backoffice/articles',

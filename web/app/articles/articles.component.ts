@@ -1,18 +1,25 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
+import {NgModel} from "@angular/common";
 
 import {Article} from './article';
 import {ArticlesService} from './articles.service';
+import {PaginationDirective} from "../directives/pagination.directive";
+import {TruncatePipe} from '../pipes/truncate.pipe';
 
 @Component({
     templateUrl: 'app/articles/articles.component.html',
-    providers: [ArticlesService]
+    providers: [ArticlesService, PaginationDirective, NgModel],
+    pipes: [TruncatePipe]
 })
 
 export class ArticlesComponent {
 
     articles:Array<Article>;
     article:Array<Article>;
+    public currentPage:number = 1;
+    public totalItems = 0;
+    public maxSize:number = 5;
 
     constructor(private articlesService:ArticlesService,
                 private router:Router) {
@@ -21,10 +28,11 @@ export class ArticlesComponent {
     }
 
     getArticles() {
-        this.articlesService.getArticles(1)
+        this.articlesService.getArticles(this.currentPage)
             .subscribe(
                 articles => {
                     this.articles = articles.articles;
+                    this.totalItems = articles.count;
                 },
                 error => console.log('onError: %s', error)
             );
@@ -63,6 +71,10 @@ export class ArticlesComponent {
             this.router.navigate(['/backoffice/articles']);
         }
     }
+
+    public pageChanged():void {
+        this.getArticles();
+    };
 
 
 }

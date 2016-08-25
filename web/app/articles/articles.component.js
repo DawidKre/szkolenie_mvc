@@ -10,18 +10,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
+var common_1 = require("@angular/common");
 var articles_service_1 = require('./articles.service');
+var pagination_directive_1 = require("../directives/pagination.directive");
+var truncate_pipe_1 = require('../pipes/truncate.pipe');
 var ArticlesComponent = (function () {
     function ArticlesComponent(articlesService, router) {
         this.articlesService = articlesService;
         this.router = router;
+        this.currentPage = 1;
+        this.totalItems = 0;
+        this.maxSize = 5;
         this.getArticles();
     }
     ArticlesComponent.prototype.getArticles = function () {
         var _this = this;
-        this.articlesService.getArticles(1)
+        this.articlesService.getArticles(this.currentPage)
             .subscribe(function (articles) {
             _this.articles = articles.articles;
+            _this.totalItems = articles.count;
         }, function (error) { return console.log('onError: %s', error); });
     };
     ArticlesComponent.prototype.getArticle = function (id) {
@@ -52,10 +59,15 @@ var ArticlesComponent = (function () {
             this.router.navigate(['/backoffice/articles']);
         }
     };
+    ArticlesComponent.prototype.pageChanged = function () {
+        this.getArticles();
+    };
+    ;
     ArticlesComponent = __decorate([
         core_1.Component({
             templateUrl: 'app/articles/articles.component.html',
-            providers: [articles_service_1.ArticlesService]
+            providers: [articles_service_1.ArticlesService, pagination_directive_1.PaginationDirective, common_1.NgModel],
+            pipes: [truncate_pipe_1.TruncatePipe]
         }), 
         __metadata('design:paramtypes', [articles_service_1.ArticlesService, router_1.Router])
     ], ArticlesComponent);
