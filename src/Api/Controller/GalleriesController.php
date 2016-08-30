@@ -3,9 +3,14 @@
 namespace Api\Controller;
 
 use Api\Model\Galleries;
+use Api\Upload\FileUploader;
 use Core\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
+use Imagine\Image\ImageInterface;
+
 
 class GalleriesController extends Controller
 {
@@ -45,7 +50,7 @@ class GalleriesController extends Controller
     {
         $data = json_decode($request->getContent(), true);
         $galName = $data['gal_name'];
-        
+
         if (($this->getGalleriesModel()->createGallery($galName))) {
             return $this->render('', array(
                 'status' => Response::HTTP_CREATED
@@ -90,22 +95,42 @@ class GalleriesController extends Controller
 
     public function newPhotoAction(Request $request)
     {
-        $phtSrc = $request->get('pht_src');
-        $phtStorage = $request->get('pht_storage');
-        $phtMain = $request->get('pht_main');
-        $phtGalId = $request->get('pht_gal_id');
 
-        if (($this->getGalleriesModel()
-            ->createPhoto($phtSrc, $phtStorage, $phtMain, $phtGalId))
-        ) {
+        $file = $request->files->all();
+        print_r($file);
+        $targetDir = __DIR__ . '/../public/img2/';
+
+        $uploader = new FileUploader($targetDir);
+
+        if (isset($file)) {
+            foreach ($file['file'] as $file) {
+
+                $fileName = $uploader->upload($file);
+                if ($fileName) {
+                    echo json_encode(array(
+                        'status' => true,
+                        'generatedName' => $fileName
+                    ));
+                }
+
+                $phtSrc = $targetDir . '/' . $fileName;
+                $phtStorage = $fileName;
+                $phtMain = 2;
+                $phtGalId = 1;
+                $this->getGalleriesModel()->createPhoto($phtSrc, $phtStorage, $phtMain, $phtGalId);
+            }
+        } else {
+            echo json_encode(
+                array('status' => false, 'msg' => 'No file uploaded.')
+            );
             return $this->render('', array(
-                'status' => Response::HTTP_CREATED
-            ), 201);
+                'status' => 404
+            ));
+
         }
         return $this->render('', array(
-            'status' => 404
-        ));
-
+            'status' => Response::HTTP_CREATED
+        ), 201);
     }
 
     public function updatePhotoAction(Request $request, $id)

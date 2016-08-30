@@ -1,4 +1,5 @@
 import {Routes, RouterModule} from '@angular/router';
+
 import {CategoriesComponent}  from './categories/categories.component';
 import {CategoryEditComponent} from "./categories/category-edit.component";
 import {UserEditComponent} from "./users/user-edit.component";
@@ -9,6 +10,8 @@ import {ArticlesComponent} from "./articles/articles.component";
 import {ArticleEditComponent} from "./articles/article-edit.component";
 import {ArticleShowComponent} from "./articles/article-show.component";
 import {GalleryPhotoComponent} from "./galleries/gallery-photo.component";
+import {PhotosComponent} from "./photo/photos.component";
+import {Photos2Component} from "./photo/photos2.component";
 
 const appRoutes:Routes = [
     {
@@ -50,7 +53,16 @@ const appRoutes:Routes = [
     {
         path: 'backoffice/article/show/:id',
         component: ArticleShowComponent
+    },
+    {
+        path: 'backoffice/photos',
+        component: PhotosComponent
+    },
+    {
+        path: 'backoffice/photos2',
+        component: Photos2Component
     }
+
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

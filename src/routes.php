@@ -91,6 +91,11 @@ $router->addGet('delete_category', '/blog/category/delete/{id}', array(
     '_controller' => 'Api\\Controller\\CategoryController::deleteAction'
 ));
 
+
+$router->addGet('save_photo', '/backoffice/photos/', array(
+    '_controller' => 'Api\\Controller\\PhotosController::showAction'
+));
+
 //REST API CONTROLLERS
 
 // REST API LISTS ACTIONS 

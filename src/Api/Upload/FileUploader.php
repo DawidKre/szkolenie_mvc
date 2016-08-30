@@ -23,7 +23,7 @@ class FileUploader
         $this->targetDir = $targetDir;
     }
 
-    public function upload(UploadedFile $file)
+    public function upload($file)
     {
         $orgFileName = md5(uniqid()) . '.' . $file->guessExtension();
         $file->move($this->targetDir, $orgFileName);
