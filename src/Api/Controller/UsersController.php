@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 class UsersController extends Controller
 {
 
-
     public function listAction(Request $request)
     {
         $pageParameter = $request->get('page');
@@ -47,7 +46,8 @@ class UsersController extends Controller
         $data = json_decode($request->getContent(), true);
 
         $usrName = $data['usr_name'];
-        $usrPassword = $data['usr_password'];
+        $password = $data['usr_password'];
+        $usrPassword = password_hash($password, PASSWORD_DEFAULT);
         $usrEmail = $data['usr_email'];
         $usrStatus = $data['usr_status'];
         $usrRole = $data['usr_role'];

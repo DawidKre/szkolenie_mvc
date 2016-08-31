@@ -1,0 +1,16 @@
+<h2 style="margin-top: 200px;"> Logowanie </h2>
+<div class="login center-block">
+    <h1>Login</h1>
+    <div class="form-group">
+        <label for="useremail">Email</label>
+        <input type="text" class="form-control" id="useremail"
+               [(ngModel)]="loginForm.usr_name" name="usr_name" placeholder="Username"/>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password"
+               [(ngModel)]="loginForm.usr_password" name="usr_password" placeholder="Password"/>
+    </div>
+    <button (click)="login()" class="btn btn-default">Login</button>
+
+</div>

@@ -29,7 +29,10 @@ var ArticlesComponent = (function () {
             .subscribe(function (articles) {
             _this.articles = articles.articles;
             _this.totalItems = articles.count;
-        }, function (error) { return console.log('onError: %s', error); });
+        }, function (error) {
+            console.log('onError: %s', error);
+            _this.router.navigate(['/backoffice/login']);
+        });
     };
     ArticlesComponent.prototype.getArticle = function (id) {
         var _this = this;

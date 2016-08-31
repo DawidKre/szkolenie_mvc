@@ -34,6 +34,16 @@ class Users extends Model
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function getUserByUsername($username)
+    {
+        $stmt = $this->pdo->query("
+            SELECT * 
+            FROM mydb.users u 
+            WHERE u.usr_name = '$username'"
+        );
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function getPaginationList($from, $limit)
     {
         $sql = "SELECT u.*  FROM users u ORDER BY u.usr_id DESC LIMIT " . $from . ', ' . $limit;
@@ -109,5 +119,30 @@ class Users extends Model
           WHERE cmt_usr_id = $id"
         );
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getUserByUsernamePassword($username, $userPassword)
+    {
+
+        $stmt = $this->pdo->query("
+        SELECT * 
+        FROM mydb.users u 
+        WHERE u.usr_name = '$username'
+        AND u.usr_password = '$userPassword'"
+        );
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+    }
+
+    public function loginUser($username, $userPassword)
+    {
+        $sth = $this->pdo->prepare("
+        SELECT * FROM mydb.users
+        WHERE usr_name =  :usrName
+        AND usr_password= :usrPassword"
+        );
+        $sth->bindParam(':usrName', $username);
+        $sth->bindParam(':usrPassword', $userPassword);
+        return $sth->execute();
     }
 }

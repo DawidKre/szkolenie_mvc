@@ -255,4 +255,8 @@ $router->addDelete('photo_delete', '/photos/{id}', array(
 ), array(
     'id' => '\d+'
 ));
+
+$router->addPost('authPost', '/api/auth', array(
+    '_controller' => 'Api\\Controller\\Auth2Controller::authAction'
+));
 return $router->getRouteCollection();

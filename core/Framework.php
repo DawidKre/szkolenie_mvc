@@ -2,12 +2,14 @@
 
 namespace Core;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
+
 
 class Framework
 {
@@ -43,6 +45,8 @@ class Framework
             return call_user_func_array($controller, $arguments);
         } catch (ResourceNotFoundException $e) {
             return new Response('Not Found' . $e->getMessage(), 404);
+        } catch (\UnexpectedValueException $e) {
+            return new Response(json_encode(['Forbidden ' => $e->getMessage()]), 403);
         } catch (\Exception $e) {
             return new Response('An error occurred ' . $e->getMessage(), 500);
         }

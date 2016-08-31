@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers, Response} from '@angular/http';
+import {AuthHttp} from 'angular2-jwt/angular2-jwt';
 
 import {Category} from "./category";
 
 
 @Injectable()
 export class CategoriesService {
-    constructor(private http:Http) {
+    constructor(private http: AuthHttp) {
     }
 
     getCategories(page:Number) {

@@ -10,6 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController extends Controller
 {
+    public function __construct()
+    {
+        $this->decodeToken();
+    }
 
     public $limit = 6;
 

@@ -5,11 +5,19 @@ namespace Api\Controller;
 
 use Api\Model\Articles;
 use Core\Controller;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ArticlesController extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->decodeToken();
+    }
+
     public function listAction(Request $request)
     {
         $pageParameter = $request->get('page');
@@ -17,6 +25,7 @@ class ArticlesController extends Controller
         if ($limit > 20) $limit = 20;
         $currentPage = isSet($pageParameter) ? intval($pageParameter - 1) : 0;
         $from = $currentPage * $limit;
+
         $count = $this->getArticlesModel()->getTotalRecords();
         $totalPages = ceil($count / $limit);
 
@@ -36,7 +45,7 @@ class ArticlesController extends Controller
         $comments = $this->getArticlesModel()->getCommentsList($id);
         $galId = $article['galleries_gal_id'];
         $photos = $this->getArticlesModel()->getPhotos($galId);
-        
+
         return $this->render('', array(
             'article' => $article,
             'comments' => $comments,
@@ -57,6 +66,7 @@ class ArticlesController extends Controller
         $artUsrId = $data['art_usr_id'];
         $artGalId = $data['galleries_gal_id'];
 
+
         if (($this->getArticlesModel()
             ->createArticle($artTitle, $artySlug, $artStatus, $artBody, $artDate, $artCatId, $artUsrId, $artGalId))
         ) {
@@ -64,9 +74,7 @@ class ArticlesController extends Controller
                 'status' => Response::HTTP_CREATED
             ), 201);
         }
-        return $this->render('', array(
-            'status' => 404
-        ));
+
     }
 
     public function updateAction(Request $request, $id)
@@ -105,9 +113,10 @@ class ArticlesController extends Controller
         ));
     }
 
-    public function deleteAction($id)
+    public function deleteAction($id, Request $request)
     {
-        if (($this->getArticlesModel()->getArticle($id))) {
+
+        if (($this->getArticlesModel()->getArticle($id)) AND ($this->decodeToken($request))) {
             $this->getArticlesModel()->deleteArticle($id);
             return $this->render('', array(
                 'status' => Response::HTTP_OK
@@ -166,9 +175,9 @@ class ArticlesController extends Controller
         ));
     }
 
-    public function deleteCommentAction($id)
+    public function deleteCommentAction($id, Request $request)
     {
-        if (($this->getArticlesModel()->getComment($id))) {
+        if (($this->getArticlesModel()->getComment($id)) AND ($this->decodeToken($request))) {
             $this->getArticlesModel()->deleteComment($id);
             return $this->render('', array(
                 'status' => Response::HTTP_OK
@@ -199,6 +208,7 @@ class ArticlesController extends Controller
             'count' => $count,
         ));
     }
+
     /**
      * @return Articles
      */

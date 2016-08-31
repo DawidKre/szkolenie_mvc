@@ -60,7 +60,10 @@ export class ArticleShowComponent implements OnInit, OnDestroy {
                             this.totalItems = comments.count;
                             console.log(this.articleComments);
                         },
-                        error => console.log('onError: %s', error)
+                        error => {
+                            console.log('onErrorsss: %s', error)
+                            this.router.navigate(['/backoffice/login']);
+                        }
                     );
             }
         });

@@ -1,4 +1,4 @@
-<form id="upload" action="app/photo/upload.php" method="POST" enctype="multipart/form-data">
+<form id="upload" action="" method="POST" enctype="multipart/form-data">
 
     <fieldset>
         <legend>HTML File Upload</legend>
@@ -6,19 +6,19 @@
         <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="30000000"/>
 
         <div>
-            <label for="fileselect">Files to upload:</label>
-            <input type="file" id="fileselect" name="fileselect[]" multiple="multiple" data-preview-file-type="text"/>
+            <label>Files to upload:</label>
+            <input type="file" name="file" (change)="fileChangeEvent($event)" placeholder="Upload file..."
+                   multiple="multiple"></div>
 
+        <div id="filedrag">or drop files here</div>
 
-            <div id="filedrag">or drop files here</div>
-        </div>
 
         <div id="submitbutton">
-            <button (click)="saveFile()">Upload Files</button>
+            <button (click)="upload()">Upload Files</button>
         </div>
 
     </fieldset>
-    <input type="submit" name="zapisz">
+
 </form>
 
 <div id="progress"></div>

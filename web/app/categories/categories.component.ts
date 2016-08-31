@@ -34,7 +34,10 @@ export class CategoriesComponent {
                     this.categories = categories.categories;
                     this.totalItems = categories.count;
                 },
-                error => console.log('onError: %s', error)
+                error => {
+                    console.log('onErrors: %s', error)
+                    this.router.navigate(['/backoffice/login']);
+                }
             );
     }
 

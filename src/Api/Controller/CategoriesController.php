@@ -10,9 +10,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CategoriesController extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->decodeToken();
+    }
 
     public function listAction(Request $request)
     {
+
         $pageParameter = $request->get('page');
         $limit = $request->get('limit');
         if ($limit > 20) $limit = 20;
@@ -63,7 +69,7 @@ class CategoriesController extends Controller
     public function updateAction(Request $request, $id)
     {
         $data = json_decode($request->getContent(), true);
-        
+
         $category = $this->getCategoriesModel()->getCategory($id);
 
         $catName = $data['cat_name'];

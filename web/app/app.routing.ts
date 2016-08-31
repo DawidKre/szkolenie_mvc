@@ -11,16 +11,20 @@ import {ArticleEditComponent} from "./articles/article-edit.component";
 import {ArticleShowComponent} from "./articles/article-show.component";
 import {GalleryPhotoComponent} from "./galleries/gallery-photo.component";
 import {PhotosComponent} from "./photo/photos.component";
-import {Photos2Component} from "./photo/photos2.component";
+import {LoginComponent} from "./login/login.component";
+import {AuthGuard} from './common/auth.guard';
+import {LogoutComponent} from "./login/logout.component";
 
 const appRoutes:Routes = [
     {
         path: 'backoffice/categories',
-        component: CategoriesComponent
+        component: CategoriesComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'backoffice/category/:id',
-        component: CategoryEditComponent
+        component: CategoryEditComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'backoffice/users',
@@ -28,7 +32,8 @@ const appRoutes:Routes = [
     },
     {
         path: 'backoffice/user/:id',
-        component: UserEditComponent
+        component: UserEditComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'backoffice/galleries',
@@ -36,31 +41,41 @@ const appRoutes:Routes = [
     },
     {
         path: 'backoffice/gallery/:id',
-        component: GalleryEditComponent
+        component: GalleryEditComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'backoffice/gallery-photo',
-        component: GalleryPhotoComponent
+        component: GalleryPhotoComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'backoffice/articles',
-        component: ArticlesComponent
+        component: ArticlesComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'backoffice/article/:id',
-        component: ArticleEditComponent
+        component: ArticleEditComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'backoffice/article/show/:id',
-        component: ArticleShowComponent
+        component: ArticleShowComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'backoffice/photos',
-        component: PhotosComponent
+        component: PhotosComponent,
+        canActivate: [AuthGuard]
     },
     {
-        path: 'backoffice/photos2',
-        component: Photos2Component
+        path: 'backoffice/login',
+        component: LoginComponent
+    },
+    {
+        path: 'backoffice/logout',
+        component: LogoutComponent
     }
 
 ];

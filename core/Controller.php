@@ -4,6 +4,8 @@ namespace Core;
 
 use Core\Providers\PDOServiceProvider;
 use Core\Providers\TwigServiceProvider;
+use Exception;
+use Firebase\JWT\JWT;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -88,6 +90,14 @@ class Controller
     public function generateUrl($route, $parameters = array())
     {
         return $this->urlGenerator->generate($route, $parameters);
+    }
+
+    public function decodeToken()
+    {
+        $request = Request::createFromGlobals();
+        $key = 'key_super_secure';
+        $jwt = JWT::decode($request->headers->get('token'), $key, ['HS256']);
+        
     }
 
 

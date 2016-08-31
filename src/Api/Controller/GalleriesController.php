@@ -15,7 +15,6 @@ use Imagine\Image\ImageInterface;
 class GalleriesController extends Controller
 {
 
-
     public function listAction(Request $request)
     {
         $pageParameter = $request->get('page');

@@ -7,6 +7,7 @@ use Symfony\Component\Routing;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 
+
 $request = Request::createFromGlobals();
 $routes = include __DIR__ . '/../src/routes.php';
 

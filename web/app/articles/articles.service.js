@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
+var angular2_jwt_1 = require('angular2-jwt/angular2-jwt');
 var ArticlesService = (function () {
     function ArticlesService(http) {
         this.http = http;
@@ -54,7 +55,7 @@ var ArticlesService = (function () {
     };
     ArticlesService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp])
     ], ArticlesService);
     return ArticlesService;
 }());
